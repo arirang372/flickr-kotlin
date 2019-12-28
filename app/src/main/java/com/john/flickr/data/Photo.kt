@@ -1,15 +1,19 @@
 package com.john.flickr.data
 
 
-class Photo {
-    lateinit var id: String
-    lateinit var owner: String
-    lateinit var secret: String
-    lateinit var server: String
-    lateinit var farm: String
-    lateinit var title: String
-    var partialUrl: String? = null
-    var ispublic: Int = 0
-    var isfriend: Int = 0
+data class Photo(
+    var id: String,
+    var owner: String,
+    var secret: String,
+    var server: String,
+    var farm: String,
+    var title: String,
+    var partialUrl: String,
+    var ispublic: Int = 0,
+    var isfriend: Int = 0,
     var isfamily: Int = 0
+) {
+    override fun toString(): String {
+        return partialUrl
+    }
 }

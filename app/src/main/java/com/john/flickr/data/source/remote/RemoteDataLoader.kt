@@ -5,12 +5,13 @@ import androidx.lifecycle.MutableLiveData
 import com.john.flickr.data.FlickrResponse
 import com.john.flickr.data.Photo
 import com.john.flickr.data.source.Photos
+import io.reactivex.Observer
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
-import java.util.function.Function
 
 class RemoteDataLoader {
     private var service: FlickrService
@@ -31,17 +32,45 @@ class RemoteDataLoader {
         const val MAX_PER_PAGE = 300
         const val RESPONSE_FORMAT = "json"
         const val DEFAULT_SEARCH_TEXT = "kitten"
+        const val CACHEABLE_PHOTO_URL = "http://farm%s.staticflickr.com/%s/%s_%s_"
     }
 
     @SuppressLint("CheckResult")
-    fun loadAllPhotos(text : String) : MutableLiveData<MutableList<Photo>>
-    {
-        var photos = MutableLiveData<MutableList<Photo>>()
-        service.getPhotoContents(METHOD, MAX_PER_PAGE, RESPONSE_FORMAT, API_KEY, DEFAULT_SEARCH_TEXT)
+    fun loadAllPhotos(text: String): MutableLiveData<MutableList<Photo>> {
+        var photoLiveData = MutableLiveData<MutableList<Photo>>()
+        service.getPhotoContents(
+            METHOD,
+            MAX_PER_PAGE,
+            RESPONSE_FORMAT,
+            API_KEY,
+            DEFAULT_SEARCH_TEXT
+        )
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .map{ it.photos }
+            .map { response: FlickrResponse -> response.photos }
+            .map { photos: Photos -> photos.photo }
+            .map { createPhotoUrl(it) }
+            .subscribe(object : Observer<MutableList<Photo>> {
+                override fun onComplete() {
+                }
 
+                override fun onError(e: Throwable) {
+                }
+
+                override fun onSubscribe(d: Disposable) {
+                }
+
+                override fun onNext(photos: MutableList<Photo>) {
+                    photoLiveData.value = photos
+                }
+            })
+        return photoLiveData
+    }
+
+    private fun createPhotoUrl(photos: MutableList<Photo>): MutableList<Photo> {
+        for (p in photos) {
+            p.partialUrl = String.format(CACHEABLE_PHOTO_URL, p.farm, p.server, p.id, p.secret)
+        }
         return photos
     }
 }
