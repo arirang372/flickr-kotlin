@@ -20,13 +20,9 @@ class RemoteDataLoader {
     private var service: FlickrService
 
     init {
-        var gson = GsonBuilder()
-            .setLenient()
-            .create()
-
         var retrofit = Retrofit.Builder()
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-            .addConverterFactory(GsonConverterFactory.create(gson))
+            .addConverterFactory(GsonConverterFactory.create())
             .baseUrl(BASE_URL)
             .build()
         service = retrofit.create(FlickrService::class.java)
@@ -50,7 +46,8 @@ class RemoteDataLoader {
             MAX_PER_PAGE,
             RESPONSE_FORMAT,
             API_KEY,
-            text
+            text,
+            1
         )
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
