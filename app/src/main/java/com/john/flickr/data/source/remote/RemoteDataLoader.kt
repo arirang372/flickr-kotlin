@@ -2,13 +2,16 @@ package com.john.flickr.data.source.remote
 
 import android.annotation.SuppressLint
 import androidx.lifecycle.MutableLiveData
+import com.google.gson.GsonBuilder
 import com.john.flickr.data.FlickrResponse
 import com.john.flickr.search.model.Photo
 import com.john.flickr.data.source.Photos
+import com.john.flickr.data.source.PhotosDataSource
 import io.reactivex.Observer
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
+import retrofit2.Callback
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
@@ -17,9 +20,13 @@ class RemoteDataLoader {
     private var service: FlickrService
 
     init {
+        var gson = GsonBuilder()
+            .setLenient()
+            .create()
+
         var retrofit = Retrofit.Builder()
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-            .addConverterFactory(GsonConverterFactory.create())
+            .addConverterFactory(GsonConverterFactory.create(gson))
             .baseUrl(BASE_URL)
             .build()
         service = retrofit.create(FlickrService::class.java)
@@ -36,14 +43,14 @@ class RemoteDataLoader {
     }
 
     @SuppressLint("CheckResult")
-    fun loadAllPhotos(text: String): MutableLiveData<MutableList<Photo>> {
+    fun loadAllPhotos(text: String, callback: PhotosDataSource.LoadPhotosCallback): MutableLiveData<MutableList<Photo>> {
         var photoLiveData = MutableLiveData<MutableList<Photo>>()
         service.getPhotoContents(
             METHOD,
             MAX_PER_PAGE,
             RESPONSE_FORMAT,
             API_KEY,
-            DEFAULT_SEARCH_TEXT
+            text
         )
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
@@ -55,6 +62,7 @@ class RemoteDataLoader {
                 }
 
                 override fun onError(e: Throwable) {
+                    callback.onPhotoNotAvailable()
                 }
 
                 override fun onSubscribe(d: Disposable) {
@@ -62,6 +70,7 @@ class RemoteDataLoader {
 
                 override fun onNext(photos: MutableList<Photo>) {
                     photoLiveData.value = photos
+                    callback.onPhotosLoaded(photos)
                 }
             })
         return photoLiveData

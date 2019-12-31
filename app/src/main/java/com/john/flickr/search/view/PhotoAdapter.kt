@@ -23,7 +23,7 @@ class PhotoAdapter(photoSize: Int, thumbnail: Boolean) :
     private var mPhotoSize = photoSize
     private var mThumbnail = thumbnail
     private lateinit var mContext: Context
-    private var photos: List<Photo> = Collections.emptyList()
+    private var photos: MutableList<Photo> = Collections.emptyList()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PhotoViewHolder {
         mContext = parent.context
@@ -49,8 +49,8 @@ class PhotoAdapter(photoSize: Int, thumbnail: Boolean) :
     }
 
     override fun onBindViewHolder(holder: PhotoViewHolder, position: Int) {
-        holder.gridItemBinding.model = photos[position]
-        holder.gridItemBinding.thumbnail = mThumbnail
+        holder.gridItemBinding.model = this!!.photos[position]
+        holder.gridItemBinding.thumbnailValue = mThumbnail
         holder.gridItemBinding.callback = object : PhotoGridItemListener {
             override fun onItemClicked(photo: Photo) {
                 //go to the next Activity...
@@ -68,8 +68,8 @@ class PhotoAdapter(photoSize: Int, thumbnail: Boolean) :
         return Glide.with(mContext).asDrawable().centerCrop().load(item)
     }
 
-    fun setPhotos(photos: List<Photo>) {
-        this.photos = photos
+    fun setPhotos(photos: MutableList<Photo>?) {
+        this.photos = photos!!
         notifyDataSetChanged()
     }
 }

@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:appCompat="http://schemas.android.com/tools">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
         <variable
-            name="thumbnail"
+            name="thumbnailValue"
             type="boolean" />
         <variable
             name="model"
@@ -21,7 +21,7 @@
         android:contentDescription="@string/image_description"
         android:scaleType="centerCrop"
         android:onClick="@{()-> callback.onItemClicked(model)}"
-        appCompat:thumbnail="@{thumbnail}"
-        appCompat:url="@{model.partialUrl}" />
+        app:thumbnail="@{thumbnailValue}"
+        app:url="@{model.partialUrl}" />
 
 </layout>

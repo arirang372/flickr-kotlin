@@ -19,7 +19,7 @@
         android:orientation="horizontal"
         android:padding="10dp">
 
-        <ImageView
+        <com.john.flickr.CustomImageView
             android:id="@+id/photo_view"
             android:layout_width="0dp"
             android:layout_height="fill_parent"
@@ -27,7 +27,7 @@
             android:contentDescription="@string/image_description"
             android:onClick="@{()->callback.onItemClicked(model)}"
             android:scaleType="centerCrop"
-            app:url="@{model.partialUrl}" />
+            app:src="@{model.partialUrl}" />
 
         <TextView
             android:id="@+id/title_view"

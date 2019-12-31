@@ -19,7 +19,7 @@ class FlickrPhotoListAdapter : RecyclerView.Adapter<FlickrPhotoListAdapter.Photo
     }
 
     private lateinit var mContext: Context
-    private var photos: List<Photo> = Collections.emptyList()
+    private var photos: MutableList<Photo>? = Collections.emptyList()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PhotoTileViewHolder {
         mContext = parent.context
@@ -31,11 +31,11 @@ class FlickrPhotoListAdapter : RecyclerView.Adapter<FlickrPhotoListAdapter.Photo
     }
 
     override fun getItemCount(): Int {
-        return photos.size
+        return photos!!.size
     }
 
     override fun onBindViewHolder(holder: PhotoTileViewHolder, position: Int) {
-        holder.listItemBinding.model = photos[position]
+        holder.listItemBinding.model = this!!.photos!![position]
         holder.listItemBinding.callback = object : PhotoListItemListener {
             override fun onItemClicked(photo: Photo) {
                 //go to the next Activity...
@@ -44,15 +44,15 @@ class FlickrPhotoListAdapter : RecyclerView.Adapter<FlickrPhotoListAdapter.Photo
         holder.listItemBinding.executePendingBindings()
     }
 
-    override fun getPreloadItems(position: Int): List<Photo> {
-        return photos.subList(position, position + 1)
+    override fun getPreloadItems(position: Int): MutableList<Photo> {
+        return photos?.subList(position, position + 1)!!
     }
 
     override fun getPreloadRequestBuilder(item: Photo): RequestBuilder<*>? {
         return null
     }
 
-    fun setPhotos(photos: List<Photo>) {
+    fun setPhotos(photos: MutableList<Photo>?) {
         this.photos = photos
         notifyDataSetChanged()
     }

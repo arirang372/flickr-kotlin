@@ -12,7 +12,8 @@
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/view_pager"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:visibility="@{viewModel.dataLoading ? View.INVISIBLE : View.VISIBLE}">
 
         <androidx.viewpager.widget.PagerTabStrip
                 android:id="@+id/pager_tab_strip"
@@ -27,7 +28,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/translucent_black"
-        android:visibility="@{viewModel.dataLoading ? View.INVISIBLE : View.VISIBLE}"
+        android:visibility="@{viewModel.dataLoading ? View.VISIBLE : View.INVISIBLE}"
         android:layout_gravity="center"
         android:gravity="center"
         android:orientation="vertical">

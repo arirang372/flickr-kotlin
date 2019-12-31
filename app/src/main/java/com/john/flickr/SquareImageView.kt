@@ -3,6 +3,7 @@ package com.john.flickr
 import android.content.Context
 import android.util.AttributeSet
 import androidx.appcompat.widget.AppCompatImageView
+import com.bumptech.glide.Glide
 
 class SquareImageView : AppCompatImageView {
     constructor(context: Context) : super(context)
@@ -15,7 +16,22 @@ class SquareImageView : AppCompatImageView {
         defStyleAttr
     )
 
+    var thumbnail: Boolean
+        get() {
+            return thumbnail
+        }
+        set(value) {
+            thumbnail = value
+        }
+
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec)
+    }
+
+    fun setUrl(url: String) {
+        Glide.with(context).asDrawable().centerCrop()
+            .load(url)
+            .thumbnail(if (thumbnail) Glide.with(context).load(url) else null)
+            .into(this)
     }
 }

@@ -4,5 +4,5 @@ import com.john.flickr.search.model.Photo
 
 
 interface PhotoViewer {
-    fun onPhotosUpdated(photos: List<Photo>)
+    fun onPhotosUpdated(photos: MutableList<Photo>?)
 }

@@ -45,11 +45,12 @@ class FlickrPhotoGridFragment : Fragment(), PhotoViewer {
         var thumbnail = args.getBoolean(THUMBNAIL_KEY)
         var preloadKey = args.getInt(PRELOAD_KEY)
 
-        var binding: FlickrPhotoGridBinding = FlickrPhotoGridBinding.inflate(inflater, false)
+        var binding: FlickrPhotoGridBinding = FlickrPhotoGridBinding.inflate(inflater, container, false)
         var gridMargin: Int = resources.getDimensionPixelOffset(R.dimen.grid_margin)
         var spanCount: Int = resources.displayMetrics.widthPixels / (photoSize + (2 * gridMargin))
-        flickr_photo_grid.layoutManager = GridLayoutManager(activity, spanCount)
-        flickr_photo_grid.addItemDecoration(object : RecyclerView.ItemDecoration() {
+        var flickrPhotoGrid : RecyclerView = binding.root.findViewById(R.id.flickr_photo_grid)
+        flickrPhotoGrid.layoutManager = GridLayoutManager(activity, spanCount)
+        flickrPhotoGrid.addItemDecoration(object : RecyclerView.ItemDecoration() {
             override fun getItemOffsets(
                 outRect: Rect,
                 view: View,
@@ -59,7 +60,7 @@ class FlickrPhotoGridFragment : Fragment(), PhotoViewer {
                 outRect.set(gridMargin, gridMargin, gridMargin, gridMargin)
             }
         })
-        flickr_photo_grid.setRecyclerListener { holder ->
+        flickrPhotoGrid.setRecyclerListener { holder ->
             var photoViewHolder: PhotoAdapter.PhotoViewHolder =
                 holder as PhotoAdapter.PhotoViewHolder
             Glide.with(this@FlickrPhotoGridFragment)
@@ -67,24 +68,24 @@ class FlickrPhotoGridFragment : Fragment(), PhotoViewer {
         }
 
         var heightCount = resources.displayMetrics.heightPixels / photoSize
-        flickr_photo_grid.recycledViewPool.setMaxRecycledViews(0, spanCount * heightCount * 2)
-        flickr_photo_grid.setItemViewCacheSize(0)
-        flickr_photo_grid.adapter = PhotoAdapter(photoSize, thumbnail)
+        flickrPhotoGrid.recycledViewPool.setMaxRecycledViews(0, spanCount * heightCount * 2)
+        flickrPhotoGrid.setItemViewCacheSize(0)
+        flickrPhotoGrid.adapter = PhotoAdapter(photoSize, thumbnail)
 
         var preloadSizeProvider: FixedPreloadSizeProvider<Photo> =
             FixedPreloadSizeProvider(photoSize, photoSize)
         var preloader: RecyclerViewPreloader<Photo> = RecyclerViewPreloader<Photo>(
             Glide.with(this),
-            flickr_photo_grid.adapter as PhotoAdapter,
+            flickrPhotoGrid.adapter as PhotoAdapter,
             preloadSizeProvider,
             preloadKey
         )
-        flickr_photo_grid.addOnScrollListener(preloader)
-        flickr_photo_grid.scrollToPosition(savedInstanceState?.getInt(STATE_POSITION_INDEX) ?: 0)
+        flickrPhotoGrid.addOnScrollListener(preloader)
+        flickrPhotoGrid.scrollToPosition(savedInstanceState?.getInt(STATE_POSITION_INDEX) ?: 0)
         return binding.root
     }
 
-    override fun onPhotosUpdated(photos: List<Photo>) {
+    override fun onPhotosUpdated(photos: MutableList<Photo>?) {
         (flickr_photo_grid.adapter as PhotoAdapter).setPhotos(photos)
     }
 
