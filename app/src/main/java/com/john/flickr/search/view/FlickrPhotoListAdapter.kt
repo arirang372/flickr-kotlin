@@ -1,0 +1,59 @@
+package com.john.flickr.search.view
+
+import android.content.Context
+import android.view.LayoutInflater
+import android.view.ViewGroup
+import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.ListPreloader
+import com.bumptech.glide.RequestBuilder
+import com.bumptech.glide.util.ViewPreloadSizeProvider
+import com.john.flickr.databinding.FlickrPhotoListItemBinding
+import com.john.flickr.search.model.Photo
+import java.util.*
+
+class FlickrPhotoListAdapter : RecyclerView.Adapter<FlickrPhotoListAdapter.PhotoTileViewHolder>(),
+    ListPreloader.PreloadModelProvider<Photo> {
+    class PhotoTileViewHolder(binding: FlickrPhotoListItemBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+        val listItemBinding: FlickrPhotoListItemBinding = binding
+    }
+
+    private lateinit var mContext: Context
+    private var photos: List<Photo> = Collections.emptyList()
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PhotoTileViewHolder {
+        mContext = parent.context
+        var binding =
+            FlickrPhotoListItemBinding.inflate(LayoutInflater.from(mContext), parent, false)
+        return PhotoTileViewHolder(binding).apply {
+            ViewPreloadSizeProvider<Photo>().setView(this.listItemBinding.photoView)
+        }
+    }
+
+    override fun getItemCount(): Int {
+        return photos.size
+    }
+
+    override fun onBindViewHolder(holder: PhotoTileViewHolder, position: Int) {
+        holder.listItemBinding.model = photos[position]
+        holder.listItemBinding.callback = object : PhotoListItemListener {
+            override fun onItemClicked(photo: Photo) {
+                //go to the next Activity...
+            }
+        }
+        holder.listItemBinding.executePendingBindings()
+    }
+
+    override fun getPreloadItems(position: Int): List<Photo> {
+        return photos.subList(position, position + 1)
+    }
+
+    override fun getPreloadRequestBuilder(item: Photo): RequestBuilder<*>? {
+        return null
+    }
+
+    fun setPhotos(photos: List<Photo>) {
+        this.photos = photos
+        notifyDataSetChanged()
+    }
+}

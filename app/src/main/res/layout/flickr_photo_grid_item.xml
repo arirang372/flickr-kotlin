@@ -20,6 +20,7 @@
         android:layout_height="match_parent"
         android:contentDescription="@string/image_description"
         android:scaleType="centerCrop"
+        android:onClick="@{()-> callback.onItemClicked(model)}"
         appCompat:thumbnail="@{thumbnail}"
         appCompat:url="@{model.partialUrl}" />
 

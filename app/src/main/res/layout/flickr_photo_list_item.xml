@@ -1,25 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="horizontal"
-              android:layout_width="fill_parent"
-              android:layout_height="@dimen/flickr_list_item_height"
-              android:padding="10dp">
+    <data>
 
-    <ImageView
-        android:id="@+id/photo_view"
-        android:layout_width="0dp"
-        android:layout_height="fill_parent"
-        android:layout_weight="1"
-        android:scaleType="centerCrop"
-        android:contentDescription="@string/image_description"/>
+        <variable
+            name="model"
+            type="com.john.flickr.search.model.Photo" />
 
-    <TextView
-        android:id="@+id/title_view"
-        android:layout_width="0dp"
-        android:layout_height="fill_parent"
-        android:layout_weight="1"
-        android:layout_margin="10dp"
-        android:gravity="center"
-        android:textSize="16sp"/>
-</LinearLayout>
+        <variable
+            name="callback"
+            type="com.john.flickr.search.view.PhotoListItemListener" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/flickr_list_item_height"
+        android:orientation="horizontal"
+        android:padding="10dp">
+
+        <ImageView
+            android:id="@+id/photo_view"
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:contentDescription="@string/image_description"
+            android:onClick="@{()->callback.onItemClicked(model)}"
+            android:scaleType="centerCrop"
+            app:url="@{model.partialUrl}" />
+
+        <TextView
+            android:id="@+id/title_view"
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_margin="10dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:textSize="16sp" />
+    </LinearLayout>
+</layout>
