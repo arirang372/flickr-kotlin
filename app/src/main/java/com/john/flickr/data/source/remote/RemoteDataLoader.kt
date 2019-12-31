@@ -3,7 +3,7 @@ package com.john.flickr.data.source.remote
 import android.annotation.SuppressLint
 import androidx.lifecycle.MutableLiveData
 import com.john.flickr.data.FlickrResponse
-import com.john.flickr.data.Photo
+import com.john.flickr.search.model.Photo
 import com.john.flickr.data.source.Photos
 import io.reactivex.Observer
 import io.reactivex.android.schedulers.AndroidSchedulers

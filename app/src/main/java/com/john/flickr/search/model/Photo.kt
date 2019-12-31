@@ -1,4 +1,4 @@
-package com.john.flickr.data
+package com.john.flickr.search.model
 
 
 data class Photo(

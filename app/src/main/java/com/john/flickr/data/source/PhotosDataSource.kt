@@ -1,6 +1,6 @@
 package com.john.flickr.data.source
 
-import com.john.flickr.data.Photo
+import com.john.flickr.search.model.Photo
 
 
 interface PhotosDataSource {
