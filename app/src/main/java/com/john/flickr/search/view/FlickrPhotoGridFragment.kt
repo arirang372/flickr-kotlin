@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.util.Preconditions
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -15,6 +16,7 @@ import com.bumptech.glide.util.FixedPreloadSizeProvider
 import com.john.flickr.R
 import com.john.flickr.databinding.FlickrPhotoGridBinding
 import com.john.flickr.search.model.Photo
+import com.john.flickr.search.viewmodel.FlickrSearchViewModel
 import kotlinx.android.synthetic.main.flickr_photo_grid.*
 
 class FlickrPhotoGridFragment : Fragment(), PhotoViewer {
@@ -35,6 +37,8 @@ class FlickrPhotoGridFragment : Fragment(), PhotoViewer {
         }
     }
 
+    var viewModel: FlickrSearchViewModel? = null
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -45,10 +49,11 @@ class FlickrPhotoGridFragment : Fragment(), PhotoViewer {
         var thumbnail = args.getBoolean(THUMBNAIL_KEY)
         var preloadKey = args.getInt(PRELOAD_KEY)
 
-        var binding: FlickrPhotoGridBinding = FlickrPhotoGridBinding.inflate(inflater, container, false)
+        var binding: FlickrPhotoGridBinding =
+            FlickrPhotoGridBinding.inflate(inflater, container, false)
         var gridMargin: Int = resources.getDimensionPixelOffset(R.dimen.grid_margin)
         var spanCount: Int = resources.displayMetrics.widthPixels / (photoSize + (2 * gridMargin))
-        var flickrPhotoGrid : RecyclerView = binding.root.findViewById(R.id.flickr_photo_grid)
+        var flickrPhotoGrid: RecyclerView = binding.root.findViewById(R.id.flickr_photo_grid)
         flickrPhotoGrid.layoutManager = GridLayoutManager(activity, spanCount)
         flickrPhotoGrid.addItemDecoration(object : RecyclerView.ItemDecoration() {
             override fun getItemOffsets(
@@ -83,6 +88,14 @@ class FlickrPhotoGridFragment : Fragment(), PhotoViewer {
         flickrPhotoGrid.addOnScrollListener(preloader)
         flickrPhotoGrid.scrollToPosition(savedInstanceState?.getInt(STATE_POSITION_INDEX) ?: 0)
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        viewModel = activity?.let { FlickrSearchActivity.obtainViewModel(it) }
+        viewModel?.getPhotos()?.observe(this, Observer {
+            onPhotosUpdated(it)
+        })
     }
 
     override fun onPhotosUpdated(photos: MutableList<Photo>?) {

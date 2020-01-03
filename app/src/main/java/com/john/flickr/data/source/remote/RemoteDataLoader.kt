@@ -2,7 +2,10 @@ package com.john.flickr.data.source.remote
 
 import android.annotation.SuppressLint
 import androidx.lifecycle.MutableLiveData
+import com.bumptech.glide.load.model.MultiModelLoaderFactory
 import com.google.gson.GsonBuilder
+import com.john.flickr.FlickrModelLoader
+import com.john.flickr.data.AppConstant.Companion.getPhotoURL
 import com.john.flickr.data.FlickrResponse
 import com.john.flickr.search.model.Photo
 import com.john.flickr.data.source.Photos
@@ -76,6 +79,8 @@ class RemoteDataLoader {
     private fun createPhotoUrl(photos: MutableList<Photo>): MutableList<Photo> {
         for (p in photos) {
             p.partialUrl = String.format(CACHEABLE_PHOTO_URL, p.farm, p.server, p.id, p.secret)
+
+            p.partialUrl = getPhotoURL(p, 55, 55)
         }
         return photos
     }

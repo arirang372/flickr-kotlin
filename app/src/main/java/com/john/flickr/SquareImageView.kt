@@ -16,22 +16,16 @@ class SquareImageView : AppCompatImageView {
         defStyleAttr
     )
 
-    var thumbnail: Boolean
-        get() {
-            return thumbnail
-        }
-        set(value) {
-            thumbnail = value
-        }
+    var thumbnail: Boolean = false
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec)
     }
 
-    fun setUrl(url: String) {
-        Glide.with(context).asDrawable().centerCrop()
-            .load(url)
-            .thumbnail(if (thumbnail) Glide.with(context).load(url) else null)
-            .into(this)
-    }
+//    fun setUrl(url: String) {
+//        Glide.with(context).asDrawable().centerCrop()
+//            .load(url)
+//            .thumbnail(if (thumbnail) Glide.with(context).load(url) else null)
+//            .into(this)
+//    }
 }

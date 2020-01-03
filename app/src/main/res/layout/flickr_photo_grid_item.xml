@@ -22,6 +22,6 @@
         android:scaleType="centerCrop"
         android:onClick="@{()-> callback.onItemClicked(model)}"
         app:thumbnail="@{thumbnailValue}"
-        app:url="@{model.partialUrl}" />
+        android:src="@{model.partialUrl}" />
 
 </layout>

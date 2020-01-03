@@ -1,12 +1,14 @@
 package com.john.flickr.search.view
 
 import android.os.Bundle
-import android.widget.SearchView
+import android.view.Menu
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.SearchView
 import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.ViewModelProviders
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.prefill.PreFillType
 import com.john.flickr.R
 import com.john.flickr.ViewModelFactory
 import com.john.flickr.data.Page
@@ -24,9 +26,16 @@ class FlickrSearchActivity : AppCompatActivity(), SearchView.OnQueryTextListener
             Page.SMALL to R.string.small,
             Page.MEDIUM to R.string.medium, Page.LIST to R.string.list
         )
+
+        fun obtainViewModel(activity: FragmentActivity): FlickrSearchViewModel {
+            var factory = ViewModelFactory.getInstance(activity.application)
+            return ViewModelProviders.of(activity, factory).get(FlickrSearchViewModel::class.java)
+        }
     }
 
     lateinit var viewModel: FlickrSearchViewModel
+    lateinit var searchView : SearchView
+    var photoViewers: MutableList<PhotoViewer> = mutableListOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,9 +45,19 @@ class FlickrSearchActivity : AppCompatActivity(), SearchView.OnQueryTextListener
         view_pager.pageMargin = resources.getDimensionPixelOffset(R.dimen.page_margin)
         view_pager.adapter = FlickrPagerAdapter(this)
         viewModel.executeSearch(DEFAULT_SEARCH_TEXT)
+
+//        if(savedInstanceState == null)
+//        {
+//            Glide.get(this)
+//                .preFillBitmapPool(PreFillType.Builder())
+//        }
     }
 
     override fun onQueryTextSubmit(query: String?): Boolean {
+        if (query != null) {
+            viewModel.executeSearch(query)
+            searchView.setQuery("", false)
+        }
         return false
     }
 
@@ -46,15 +65,25 @@ class FlickrSearchActivity : AppCompatActivity(), SearchView.OnQueryTextListener
         return false
     }
 
-    fun obtainViewModel(activity: FragmentActivity): FlickrSearchViewModel {
-        var factory = ViewModelFactory.getInstance(activity.application)
-        return ViewModelProviders.of(activity, factory).get(FlickrSearchViewModel::class.java)
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.search_activity, menu)
+        searchView = menu?.findItem(R.id.search)?.actionView as SearchView
+        searchView.isSubmitButtonEnabled = true
+        searchView.isIconified = false
+        searchView.setOnQueryTextListener(this)
+        return true
     }
 
-    override fun onAttachFragment(fragment: Fragment) {
-        if (fragment === PhotoViewer::class.java) {
-            var photoViewer = fragment as PhotoViewer
-            photoViewer.onPhotosUpdated(viewModel.getPhotos().value)
-        }
-    }
+
+
+
+//    override fun onAttachFragment(fragment: Fragment) {
+//        if (fragment == PhotoViewer::class.java) {
+//            var photoViewer = fragment as PhotoViewer
+//            photoViewer.onPhotosUpdated(viewModel.getPhotos().value)
+//            if (!photoViewers.contains(photoViewer)) {
+//                photoViewers.add(photoViewer)
+//            }
+//        }
+//    }
 }

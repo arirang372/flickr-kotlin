@@ -21,16 +21,16 @@ class CustomImageView : ImageView {
         defStyleAttr
     )
 
-    fun setSrc(src: String) {
-        Glide.with(context).asDrawable().centerCrop().placeholder(ColorDrawable(Color.GRAY))
-            .load(src)
-            .thumbnail(
-                Glide.with(context).asDrawable()
-                    .diskCacheStrategy(DiskCacheStrategy.DATA)
-                    .override(AppConstant.SQUARE_THUMB_SIZE)
-                    .transition(DrawableTransitionOptions.withCrossFade())
-                    .load(src)
-            )
-            .into(this)
-    }
+//    fun setSrc(src: String) {
+//        Glide.with(context).asDrawable().centerCrop().placeholder(ColorDrawable(Color.GRAY))
+//            .load(src)
+//            .thumbnail(
+//                Glide.with(context).asDrawable()
+//                    .diskCacheStrategy(DiskCacheStrategy.DATA)
+//                    .override(AppConstant.SQUARE_THUMB_SIZE)
+//                    .transition(DrawableTransitionOptions.withCrossFade())
+//                    .load(src)
+//            )
+//            .into(this)
+//    }
 }
