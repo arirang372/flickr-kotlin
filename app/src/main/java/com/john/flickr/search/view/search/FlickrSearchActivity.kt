@@ -12,7 +12,6 @@ import com.john.flickr.ViewModelFactory
 import com.john.flickr.data.Page
 import com.john.flickr.data.source.remote.RemoteDataLoader.Companion.DEFAULT_SEARCH_TEXT
 import com.john.flickr.databinding.FlickrSearchActivityBinding
-import com.john.flickr.search.view.search.callbacks.PhotoViewer
 import com.john.flickr.search.viewmodel.FlickrSearchViewModel
 import kotlinx.android.synthetic.main.flickr_search_activity.*
 
@@ -34,14 +33,9 @@ class FlickrSearchActivity : AppCompatActivity(), SearchView.OnQueryTextListener
 
     lateinit var viewModel: FlickrSearchViewModel
     lateinit var searchView: SearchView
-    var photoViewers: MutableList<PhotoViewer> = mutableListOf()
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel =
-            obtainViewModel(
-                this
-            )
+        viewModel = obtainViewModel(this)
         searchActivityBinding =
             DataBindingUtil.setContentView(this, R.layout.flickr_search_activity)
         view_pager.pageMargin = resources.getDimensionPixelOffset(R.dimen.page_margin)

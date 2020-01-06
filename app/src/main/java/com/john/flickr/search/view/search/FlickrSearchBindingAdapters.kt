@@ -1,4 +1,4 @@
-package com.john.flickr.search.view
+package com.john.flickr.search.view.search
 
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
@@ -10,7 +10,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.john.flickr.data.AppConstant.Companion.SQUARE_THUMB_SIZE
 
-object FlickrBindingAdapters {
+object FlickrSearchBindingAdapters {
     @JvmStatic
     @BindingAdapter(value = ["android:src", "app:thumbnail"], requireAll = true)
     fun setImageUrl(

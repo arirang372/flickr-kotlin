@@ -9,6 +9,7 @@ import com.bumptech.glide.ListPreloader
 import com.bumptech.glide.RequestBuilder
 import com.john.flickr.databinding.FlickrPhotoGridItemBinding
 import com.john.flickr.search.model.Photo
+import com.john.flickr.search.view.details.FlickrPhotoDetailsActivity
 import com.john.flickr.search.view.search.callbacks.PhotoGridItemListener
 import java.util.*
 
@@ -58,7 +59,7 @@ class PhotoGridAdapter(photoSize: Int, thumbnail: Boolean) :
             PhotoGridItemListener {
             override fun onItemClicked(photo: Photo) {
                 //go to the next Activity...
-
+                mContext.startActivity(FlickrPhotoDetailsActivity.getIntent(mContext, photo))
             }
         }
         holder.gridItemBinding.executePendingBindings()

@@ -109,11 +109,11 @@ class FlickrPhotoGridFragment : Fragment(),
         (flickr_photo_grid.adapter as PhotoGridAdapter).setPhotos(photos)
     }
 
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-        outState.putInt(
-            STATE_POSITION_INDEX,
-            (flickr_photo_grid.layoutManager as GridLayoutManager).findFirstVisibleItemPosition()
-        )
-    }
+//    override fun onSaveInstanceState(outState: Bundle) {
+//        super.onSaveInstanceState(outState)
+//        outState.putInt(
+//            STATE_POSITION_INDEX,
+//            (flickr_photo_grid.layoutManager as GridLayoutManager).findFirstVisibleItemPosition()
+//        )
+//    }
 }
