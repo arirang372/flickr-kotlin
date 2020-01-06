@@ -7,8 +7,6 @@ import androidx.appcompat.widget.SearchView
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.ViewModelProviders
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.engine.prefill.PreFillType
 import com.john.flickr.R
 import com.john.flickr.ViewModelFactory
 import com.john.flickr.data.Page
@@ -34,7 +32,7 @@ class FlickrSearchActivity : AppCompatActivity(), SearchView.OnQueryTextListener
     }
 
     lateinit var viewModel: FlickrSearchViewModel
-    lateinit var searchView : SearchView
+    lateinit var searchView: SearchView
     var photoViewers: MutableList<PhotoViewer> = mutableListOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -73,17 +71,4 @@ class FlickrSearchActivity : AppCompatActivity(), SearchView.OnQueryTextListener
         searchView.setOnQueryTextListener(this)
         return true
     }
-
-
-
-
-//    override fun onAttachFragment(fragment: Fragment) {
-//        if (fragment == PhotoViewer::class.java) {
-//            var photoViewer = fragment as PhotoViewer
-//            photoViewer.onPhotosUpdated(viewModel.getPhotos().value)
-//            if (!photoViewers.contains(photoViewer)) {
-//                photoViewers.add(photoViewer)
-//            }
-//        }
-//    }
 }

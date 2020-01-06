@@ -2,19 +2,15 @@ package com.john.flickr.data.source.remote
 
 import android.annotation.SuppressLint
 import androidx.lifecycle.MutableLiveData
-import com.bumptech.glide.load.model.MultiModelLoaderFactory
-import com.google.gson.GsonBuilder
-import com.john.flickr.FlickrModelLoader
 import com.john.flickr.data.AppConstant.Companion.getPhotoURL
 import com.john.flickr.data.FlickrResponse
-import com.john.flickr.search.model.Photo
 import com.john.flickr.data.source.Photos
 import com.john.flickr.data.source.PhotosDataSource
+import com.john.flickr.search.model.Photo
 import io.reactivex.Observer
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
-import retrofit2.Callback
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
@@ -42,7 +38,10 @@ class RemoteDataLoader {
     }
 
     @SuppressLint("CheckResult")
-    fun loadAllPhotos(text: String, callback: PhotosDataSource.LoadPhotosCallback): MutableLiveData<MutableList<Photo>> {
+    fun loadAllPhotos(
+        text: String,
+        callback: PhotosDataSource.LoadPhotosCallback
+    ): MutableLiveData<MutableList<Photo>> {
         var photoLiveData = MutableLiveData<MutableList<Photo>>()
         service.getPhotoContents(
             METHOD,

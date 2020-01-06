@@ -10,19 +10,17 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.john.flickr.data.AppConstant.Companion.SQUARE_THUMB_SIZE
 
-
 object FlickrBindingAdapters {
     @JvmStatic
-    @BindingAdapter("android:src")
-    fun setImageResourceWithThumbnail(
+    @BindingAdapter(value = ["android:src", "app:thumbnail"], requireAll = true)
+    fun setImageUrl(
         imageView: AppCompatImageView,
-        //thumbnail: Boolean,
+        thumbnail: Boolean,
         url: String
     ) {
         Glide.with(imageView.context).asDrawable().centerCrop()
             .load(url)
-            //.thumbnail(if (thumbnail) Glide.with(imageView.context).load(url) else null)
-            .thumbnail(Glide.with(imageView.context).load(url))
+            .thumbnail(if (thumbnail) Glide.with(imageView.context).load(url) else null)
             .into(imageView)
     }
 
