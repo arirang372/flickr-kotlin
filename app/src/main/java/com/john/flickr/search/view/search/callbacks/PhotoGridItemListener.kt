@@ -1,4 +1,4 @@
-package com.john.flickr.search.view
+package com.john.flickr.search.view.search.callbacks
 
 import com.john.flickr.search.model.Photo
 

@@ -1,4 +1,4 @@
-package com.john.flickr.search.view
+package com.john.flickr.search.view.search
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -14,11 +14,13 @@ import com.bumptech.glide.util.ViewPreloadSizeProvider
 import com.john.flickr.R
 import com.john.flickr.databinding.FlickrPhotoListBinding
 import com.john.flickr.search.model.Photo
+import com.john.flickr.search.view.search.callbacks.PhotoViewer
 import com.john.flickr.search.viewmodel.FlickrSearchViewModel
 import kotlinx.android.synthetic.main.flickr_photo_list.*
 
 
-class FlickrPhotoListFragment : Fragment(), PhotoViewer {
+class FlickrPhotoListFragment : Fragment(),
+    PhotoViewer {
     companion object {
         const val PRELOAD_AHEAD_ITEMS = 5
         const val STATE_POSITION_INDEX = "state_position_index"
@@ -38,7 +40,8 @@ class FlickrPhotoListFragment : Fragment(), PhotoViewer {
         var binding = FlickrPhotoListBinding.inflate(inflater, container, false)
         var flickrPhotoList: RecyclerView = binding.root.findViewById(R.id.flickr_photo_list)
         flickrPhotoList.layoutManager = LinearLayoutManager(context)
-        flickrPhotoList.adapter = FlickrPhotoListAdapter()
+        flickrPhotoList.adapter =
+            FlickrPhotoListAdapter()
         var preloader = RecyclerViewPreloader<Photo>(
             Glide.with(this), flickrPhotoList.adapter as FlickrPhotoListAdapter,
             ViewPreloadSizeProvider<Photo>(),

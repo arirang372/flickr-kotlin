@@ -1,4 +1,4 @@
-package com.john.flickr.search.view
+package com.john.flickr.search.view.search
 
 import android.graphics.Rect
 import android.os.Bundle
@@ -16,10 +16,12 @@ import com.bumptech.glide.util.FixedPreloadSizeProvider
 import com.john.flickr.R
 import com.john.flickr.databinding.FlickrPhotoGridBinding
 import com.john.flickr.search.model.Photo
+import com.john.flickr.search.view.search.callbacks.PhotoViewer
 import com.john.flickr.search.viewmodel.FlickrSearchViewModel
 import kotlinx.android.synthetic.main.flickr_photo_grid.*
 
-class FlickrPhotoGridFragment : Fragment(), PhotoViewer {
+class FlickrPhotoGridFragment : Fragment(),
+    PhotoViewer {
     companion object {
         const val IMAGE_SIZE_KEY = "image_size"
         const val PRELOAD_KEY = "preload"
@@ -27,7 +29,8 @@ class FlickrPhotoGridFragment : Fragment(), PhotoViewer {
         const val THUMBNAIL_KEY = "thumbnail"
 
         fun newInstance(size: Int, preloadCount: Int, thumbname: Boolean): FlickrPhotoGridFragment {
-            var photoGrid = FlickrPhotoGridFragment()
+            var photoGrid =
+                FlickrPhotoGridFragment()
             var args = Bundle()
             args.putInt(IMAGE_SIZE_KEY, size)
             args.putInt(PRELOAD_KEY, preloadCount)
@@ -66,22 +69,26 @@ class FlickrPhotoGridFragment : Fragment(), PhotoViewer {
             }
         })
         flickrPhotoGrid.setRecyclerListener { holder ->
-            var photoViewHolder: PhotoAdapter.PhotoViewHolder =
-                holder as PhotoAdapter.PhotoViewHolder
+            var photoGridViewHolder: PhotoGridAdapter.PhotoViewHolder =
+                holder as PhotoGridAdapter.PhotoViewHolder
             Glide.with(this@FlickrPhotoGridFragment)
-                .clear(photoViewHolder.gridItemBinding.imageView)
+                .clear(photoGridViewHolder.gridItemBinding.imageView)
         }
 
         var heightCount = resources.displayMetrics.heightPixels / photoSize
         flickrPhotoGrid.recycledViewPool.setMaxRecycledViews(0, spanCount * heightCount * 2)
         flickrPhotoGrid.setItemViewCacheSize(0)
-        flickrPhotoGrid.adapter = PhotoAdapter(photoSize, thumbnail)
+        flickrPhotoGrid.adapter =
+            PhotoGridAdapter(
+                photoSize,
+                thumbnail
+            )
 
         var preloadSizeProvider: FixedPreloadSizeProvider<Photo> =
             FixedPreloadSizeProvider(photoSize, photoSize)
         var preloader: RecyclerViewPreloader<Photo> = RecyclerViewPreloader<Photo>(
             Glide.with(this),
-            flickrPhotoGrid.adapter as PhotoAdapter,
+            flickrPhotoGrid.adapter as PhotoGridAdapter,
             preloadSizeProvider,
             preloadKey
         )
@@ -99,7 +106,7 @@ class FlickrPhotoGridFragment : Fragment(), PhotoViewer {
     }
 
     override fun onPhotosUpdated(photos: MutableList<Photo>?) {
-        (flickr_photo_grid.adapter as PhotoAdapter).setPhotos(photos)
+        (flickr_photo_grid.adapter as PhotoGridAdapter).setPhotos(photos)
     }
 
     override fun onSaveInstanceState(outState: Bundle) {

@@ -1,4 +1,4 @@
-package com.john.flickr.search.view
+package com.john.flickr.search.view.search
 
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
@@ -7,7 +7,7 @@ import androidx.fragment.app.FragmentPagerAdapter
 import com.bumptech.glide.Glide
 import com.john.flickr.R
 import com.john.flickr.data.Page
-import com.john.flickr.search.view.FlickrSearchActivity.Companion.PAGE_TO_TITLE
+import com.john.flickr.search.view.search.FlickrSearchActivity.Companion.PAGE_TO_TITLE
 
 class FlickrPagerAdapter(activity: FragmentActivity) :
     FragmentPagerAdapter(activity.supportFragmentManager) {

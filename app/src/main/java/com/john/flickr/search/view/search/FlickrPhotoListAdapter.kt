@@ -1,4 +1,4 @@
-package com.john.flickr.search.view
+package com.john.flickr.search.view.search
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -9,6 +9,7 @@ import com.bumptech.glide.RequestBuilder
 import com.bumptech.glide.util.ViewPreloadSizeProvider
 import com.john.flickr.databinding.FlickrPhotoListItemBinding
 import com.john.flickr.search.model.Photo
+import com.john.flickr.search.view.search.callbacks.PhotoListItemListener
 import java.util.*
 
 class FlickrPhotoListAdapter : RecyclerView.Adapter<FlickrPhotoListAdapter.PhotoTileViewHolder>(),
@@ -25,7 +26,9 @@ class FlickrPhotoListAdapter : RecyclerView.Adapter<FlickrPhotoListAdapter.Photo
         mContext = parent.context
         var binding =
             FlickrPhotoListItemBinding.inflate(LayoutInflater.from(mContext), parent, false)
-        return PhotoTileViewHolder(binding).apply {
+        return PhotoTileViewHolder(
+            binding
+        ).apply {
             ViewPreloadSizeProvider<Photo>().setView(this.listItemBinding.photoView)
         }
     }
@@ -36,7 +39,8 @@ class FlickrPhotoListAdapter : RecyclerView.Adapter<FlickrPhotoListAdapter.Photo
 
     override fun onBindViewHolder(holder: PhotoTileViewHolder, position: Int) {
         holder.listItemBinding.model = this!!.photos!![position]
-        holder.listItemBinding.callback = object : PhotoListItemListener {
+        holder.listItemBinding.callback = object :
+            PhotoListItemListener {
             override fun onItemClicked(photo: Photo) {
                 //go to the next Activity...
             }

@@ -11,7 +11,7 @@
             type="com.john.flickr.search.model.Photo" />
         <variable
             name="callback"
-            type="com.john.flickr.search.view.PhotoGridItemListener" />
+            type="com.john.flickr.search.view.search.callbacks.PhotoGridItemListener" />
     </data>
 
     <com.john.flickr.SquareImageView

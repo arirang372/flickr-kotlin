@@ -1,4 +1,4 @@
-package com.john.flickr.search.view
+package com.john.flickr.search.view.search
 
 import android.os.Bundle
 import android.view.Menu
@@ -12,6 +12,7 @@ import com.john.flickr.ViewModelFactory
 import com.john.flickr.data.Page
 import com.john.flickr.data.source.remote.RemoteDataLoader.Companion.DEFAULT_SEARCH_TEXT
 import com.john.flickr.databinding.FlickrSearchActivityBinding
+import com.john.flickr.search.view.search.callbacks.PhotoViewer
 import com.john.flickr.search.viewmodel.FlickrSearchViewModel
 import kotlinx.android.synthetic.main.flickr_search_activity.*
 
@@ -37,11 +38,15 @@ class FlickrSearchActivity : AppCompatActivity(), SearchView.OnQueryTextListener
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel = obtainViewModel(this)
+        viewModel =
+            obtainViewModel(
+                this
+            )
         searchActivityBinding =
             DataBindingUtil.setContentView(this, R.layout.flickr_search_activity)
         view_pager.pageMargin = resources.getDimensionPixelOffset(R.dimen.page_margin)
-        view_pager.adapter = FlickrPagerAdapter(this)
+        view_pager.adapter =
+            FlickrPagerAdapter(this)
         viewModel.executeSearch(DEFAULT_SEARCH_TEXT)
 
 //        if(savedInstanceState == null)
