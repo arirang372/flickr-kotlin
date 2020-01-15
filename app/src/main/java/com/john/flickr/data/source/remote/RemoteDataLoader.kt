@@ -1,7 +1,6 @@
 package com.john.flickr.data.source.remote
 
 import android.annotation.SuppressLint
-import androidx.databinding.ObservableArrayList
 import androidx.databinding.ObservableList
 import com.john.flickr.data.AppConstant.Companion.getPhotoURL
 import com.john.flickr.data.FlickrResponse
@@ -31,7 +30,7 @@ class RemoteDataLoader {
     companion object {
         private const val BASE_URL = "https://api.flickr.com"
         const val API_KEY = "f0e6fbb5fdf1f3842294a1d21f84e8a6"
-        const val METHOD = "flickr.photos.getRecent"
+        const val METHOD = "flickr.photos.search"
         const val MAX_PER_PAGE = 300
         const val RESPONSE_FORMAT = "json"
         const val DEFAULT_SEARCH_TEXT = "kitten"
@@ -41,9 +40,9 @@ class RemoteDataLoader {
     @SuppressLint("CheckResult")
     fun loadAllPhotos(
         text: String,
-        callback: PhotosDataSource.LoadPhotosCallback
-    ): ObservableList<Photo> {
-        var photoLiveData = ObservableArrayList<Photo>()
+        callback: PhotosDataSource.LoadPhotosCallback,
+        observableList: ObservableList<Photo>
+    ) {
         service.getPhotoContents(
             METHOD,
             MAX_PER_PAGE,
@@ -69,12 +68,10 @@ class RemoteDataLoader {
                 }
 
                 override fun onNext(photos: MutableList<Photo>) {
-                    photoLiveData.clear()
-                    photoLiveData.addAll(photos)
-                    // callback.onPhotosLoaded(photos)
+                    observableList.clear()
+                    observableList.addAll(photos)
                 }
             })
-        return photoLiveData
     }
 
     private fun createPhotoUrl(photos: MutableList<Photo>): MutableList<Photo> {

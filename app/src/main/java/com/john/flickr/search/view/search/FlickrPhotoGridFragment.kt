@@ -17,7 +17,7 @@ import com.john.flickr.databinding.FlickrPhotoGridBinding
 import com.john.flickr.search.model.Photo
 import com.john.flickr.search.viewmodel.FlickrSearchViewModel
 
-class FlickrPhotoGridFragment : Fragment(){
+class FlickrPhotoGridFragment : Fragment() {
     companion object {
         const val IMAGE_SIZE_KEY = "image_size"
         const val PRELOAD_KEY = "preload"
@@ -65,7 +65,8 @@ class FlickrPhotoGridFragment : Fragment(){
             }
         })
         flickrPhotoGrid.setRecyclerListener { holder ->
-            var photoGridViewHolder: PhotoGridAdapter.PhotoViewHolder = holder as PhotoGridAdapter.PhotoViewHolder
+            var photoGridViewHolder: PhotoGridAdapter.PhotoViewHolder =
+                holder as PhotoGridAdapter.PhotoViewHolder
             Glide.with(this@FlickrPhotoGridFragment)
                 .clear(photoGridViewHolder.gridItemBinding.imageView)
         }
@@ -92,12 +93,5 @@ class FlickrPhotoGridFragment : Fragment(){
         super.onViewCreated(view, savedInstanceState)
         viewModel = activity?.let { FlickrSearchActivity.obtainViewModel(it) }
         binding.viewModel = viewModel
-//        viewModel?.getPhotos()?.observe(this, Observer {
-//            onPhotosUpdated(it)
-//        })
     }
-
-//    override fun onPhotosUpdated(photos: MutableList<Photo>?) {
-//        (flickr_photo_grid.adapter as PhotoGridAdapter).setPhotos(photos)
-//    }
 }

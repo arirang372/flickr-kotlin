@@ -17,7 +17,7 @@ import kotlinx.android.synthetic.main.flickr_search_activity.*
 
 
 class FlickrSearchActivity : AppCompatActivity(), SearchView.OnQueryTextListener {
-    lateinit var searchActivityBinding: FlickrSearchActivityBinding
+    private lateinit var searchActivityBinding: FlickrSearchActivityBinding
 
     companion object {
         val PAGE_TO_TITLE: Map<Page, Int> = mapOf(
@@ -32,7 +32,7 @@ class FlickrSearchActivity : AppCompatActivity(), SearchView.OnQueryTextListener
     }
 
     lateinit var viewModel: FlickrSearchViewModel
-    lateinit var searchView: SearchView
+    private lateinit var searchView: SearchView
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewModel = obtainViewModel(this)
@@ -45,11 +45,9 @@ class FlickrSearchActivity : AppCompatActivity(), SearchView.OnQueryTextListener
     }
 
     override fun onQueryTextSubmit(query: String?): Boolean {
-        if (query != null) {
-            viewModel.executeSearch(query)
-            searchView.setQuery("", false)
-        }
-        return false
+        query?.let { viewModel.executeSearch(it) }
+        searchView.setQuery("", false)
+        return true
     }
 
     override fun onQueryTextChange(newText: String?): Boolean {

@@ -10,8 +10,9 @@ class PhotoRepository {
 
     fun loadAllPhotos(
         keyword: String,
-        callback: PhotosDataSource.LoadPhotosCallback
-    ): ObservableList<Photo> {
-        return dataLoader.loadAllPhotos(keyword, callback)
+        callback: PhotosDataSource.LoadPhotosCallback,
+        observableList: ObservableList<Photo>
+    ) {
+        dataLoader.loadAllPhotos(keyword, callback, observableList)
     }
 }

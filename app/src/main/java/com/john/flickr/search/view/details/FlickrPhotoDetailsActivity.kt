@@ -11,7 +11,7 @@ import com.john.flickr.search.model.Photo
 
 
 class FlickrPhotoDetailsActivity : AppCompatActivity() {
-    lateinit var flickrPhotoDetailsBinding: FlickrPhotoDetailsActivityBinding
+    private lateinit var flickrPhotoDetailsBinding: FlickrPhotoDetailsActivityBinding
 
     companion object {
         private const val ARG_PHOTO = "photo"

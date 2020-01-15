@@ -12,12 +12,12 @@ import com.john.flickr.search.model.Photo
 class FlickrSearchViewModel(application: Application, repository: PhotoRepository) :
     AndroidViewModel(application), PhotosDataSource.LoadPhotosCallback {
     private val mRepository: PhotoRepository = repository
-    var photos: ObservableList<Photo> = ObservableArrayList<Photo>()
+    val photos: ObservableList<Photo> = ObservableArrayList<Photo>()
     val dataLoading: ObservableBoolean = ObservableBoolean(false)
 
     fun executeSearch(input: String) {
         setDataLoading(true)
-        photos = mRepository.loadAllPhotos(input, this)
+        mRepository.loadAllPhotos(input, this, photos)
     }
 
     private fun setDataLoading(isLoading: Boolean) {
