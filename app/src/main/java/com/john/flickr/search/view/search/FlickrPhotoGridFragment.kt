@@ -67,22 +67,22 @@ class FlickrPhotoGridFragment : Fragment() {
             }
         })
         flickrPhotoGrid.setRecyclerListener { holder ->
-            var photoGridViewHolder: PhotoGridAdapter.PhotoViewHolder =
-                holder as PhotoGridAdapter.PhotoViewHolder
+            var flickrPhotoGridViewHolder: FlickrPhotoGridAdapter.PhotoViewHolder =
+                holder as FlickrPhotoGridAdapter.PhotoViewHolder
             Glide.with(this@FlickrPhotoGridFragment)
-                .clear(photoGridViewHolder.gridItemBinding.imageView)
+                .clear(flickrPhotoGridViewHolder.gridItemBinding.imageView)
         }
 
         var heightCount = resources.displayMetrics.heightPixels / photoSize
         flickrPhotoGrid.recycledViewPool.setMaxRecycledViews(0, spanCount * heightCount * 2)
         flickrPhotoGrid.setItemViewCacheSize(0)
-        flickrPhotoGrid.adapter = PhotoGridAdapter(photoSize, thumbnail)
+        flickrPhotoGrid.adapter = FlickrPhotoGridAdapter(photoSize, thumbnail)
 
         var preloadSizeProvider: FixedPreloadSizeProvider<Photo> =
             FixedPreloadSizeProvider(photoSize, photoSize)
         var preloader: RecyclerViewPreloader<Photo> = RecyclerViewPreloader<Photo>(
             Glide.with(this),
-            flickrPhotoGrid.adapter as PhotoGridAdapter,
+            flickrPhotoGrid.adapter as FlickrPhotoGridAdapter,
             preloadSizeProvider,
             preloadKey
         )

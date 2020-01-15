@@ -47,8 +47,8 @@ object FlickrSearchBindingAdapters {
         recyclerView: RecyclerView,
         items: MutableList<com.john.flickr.search.model.Photo>
     ) {
-        var adapter: PhotoGridAdapter = recyclerView.adapter as PhotoGridAdapter
-        adapter.setPhotos(items)
+        var adapterFlickr: FlickrPhotoGridAdapter = recyclerView.adapter as FlickrPhotoGridAdapter
+        adapterFlickr.setPhotos(items)
     }
 
     @JvmStatic

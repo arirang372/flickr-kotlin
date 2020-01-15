@@ -3,7 +3,6 @@ package com.john.flickr.search.view.search
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.Adapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.ListPreloader
@@ -11,12 +10,12 @@ import com.bumptech.glide.RequestBuilder
 import com.john.flickr.databinding.FlickrPhotoGridItemBinding
 import com.john.flickr.search.model.Photo
 import com.john.flickr.search.view.details.FlickrPhotoDetailsActivity
-import com.john.flickr.search.view.search.callbacks.PhotoGridItemListener
+import com.john.flickr.search.view.search.callbacks.PhotoItemListener
 import java.util.*
 
 
-class PhotoGridAdapter(photoSize: Int, thumbnail: Boolean) :
-    RecyclerView.Adapter<PhotoGridAdapter.PhotoViewHolder>(),
+class FlickrPhotoGridAdapter(photoSize: Int, thumbnail: Boolean) :
+    RecyclerView.Adapter<FlickrPhotoGridAdapter.PhotoViewHolder>(),
     ListPreloader.PreloadModelProvider<Photo> {
     class PhotoViewHolder(binding: FlickrPhotoGridItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
@@ -56,8 +55,7 @@ class PhotoGridAdapter(photoSize: Int, thumbnail: Boolean) :
     override fun onBindViewHolder(holder: PhotoViewHolder, position: Int) {
         holder.gridItemBinding.model = this!!.photos[position]
         holder.gridItemBinding.thumbnailValue = mThumbnail
-        holder.gridItemBinding.callback = object :
-            PhotoGridItemListener {
+        holder.gridItemBinding.callback = object : PhotoItemListener {
             override fun onItemClicked(photo: Photo) {
                 //go to the next Activity...
                 mContext.startActivity(FlickrPhotoDetailsActivity.getIntent(mContext, photo))
