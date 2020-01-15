@@ -20,6 +20,9 @@ class FlickrPhotoDetailsActivity : AppCompatActivity() {
             intent.putExtra(ARG_PHOTO, photo)
             return intent
         }
+
+        const val VIEW_NAME_IMAGE = "detail:image"
+        const val VIEW_NAME_TITLE = "detail:title"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

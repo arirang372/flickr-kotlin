@@ -6,14 +6,17 @@ import android.view.Menu
 import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
+import androidx.core.app.ActivityOptionsCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.FragmentActivity
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.john.flickr.R
 import com.john.flickr.ViewModelFactory
 import com.john.flickr.data.Page
 import com.john.flickr.data.source.remote.RemoteDataLoader.Companion.DEFAULT_SEARCH_TEXT
 import com.john.flickr.databinding.FlickrSearchActivityBinding
+import com.john.flickr.search.view.details.FlickrPhotoDetailsActivity
 import com.john.flickr.search.viewmodel.FlickrSearchViewModel
 import kotlinx.android.synthetic.main.flickr_search_activity.*
 
@@ -43,6 +46,18 @@ class FlickrSearchActivity : AppCompatActivity(), SearchView.OnQueryTextListener
         view_pager.pageMargin = resources.getDimensionPixelOffset(R.dimen.page_margin)
         view_pager.adapter = FlickrPagerAdapter(this)
         viewModel.executeSearch(DEFAULT_SEARCH_TEXT)
+        viewModel.getOpenTaskEvent().observe(this, Observer {
+            openDetailPage(it)
+        })
+    }
+
+    private fun openDetailPage(pair: Pair<Int, String>) {
+        var activityOption = ActivityOptionsCompat.makeSceneTransitionAnimation(
+            this,
+            searchActivityBinding.root.findViewById(pair.first),
+            pair.second
+        )
+        startActivity(FlickrPhotoDetailsActivity.getIntent(this, photo))
     }
 
     override fun onQueryTextSubmit(query: String?): Boolean {
