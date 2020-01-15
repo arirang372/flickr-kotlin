@@ -25,5 +25,4 @@ class ViewModelFactory(application: Application) : ViewModelProvider.NewInstance
             return instance as ViewModelFactory
         }
     }
-
 }
