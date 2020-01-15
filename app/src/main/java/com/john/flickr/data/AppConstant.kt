@@ -80,6 +80,4 @@ class AppConstant {
             return getPhotoUrl(photo, getSizeKey(width, height))
         }
     }
-
-
 }

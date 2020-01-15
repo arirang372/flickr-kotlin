@@ -1,25 +1,19 @@
 package com.john.flickr.search.viewmodel
 
 import android.app.Application
+import androidx.databinding.ObservableArrayList
 import androidx.databinding.ObservableBoolean
+import androidx.databinding.ObservableList
 import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.LiveData
 import com.john.flickr.data.source.PhotoRepository
 import com.john.flickr.data.source.PhotosDataSource
 import com.john.flickr.search.model.Photo
 
 class FlickrSearchViewModel(application: Application, repository: PhotoRepository) :
     AndroidViewModel(application), PhotosDataSource.LoadPhotosCallback {
-    val mApplication: Application = application
-    val mRepository: PhotoRepository = repository
-
+    private val mRepository: PhotoRepository = repository
+    var photos: ObservableList<Photo> = ObservableArrayList<Photo>()
     val dataLoading: ObservableBoolean = ObservableBoolean(false)
-
-    private lateinit var photos: LiveData<MutableList<Photo>>
-
-    fun getPhotos(): LiveData<MutableList<Photo>> {
-        return photos
-    }
 
     fun executeSearch(input: String) {
         setDataLoading(true)

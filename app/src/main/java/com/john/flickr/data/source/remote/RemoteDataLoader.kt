@@ -1,7 +1,8 @@
 package com.john.flickr.data.source.remote
 
 import android.annotation.SuppressLint
-import androidx.lifecycle.MutableLiveData
+import androidx.databinding.ObservableArrayList
+import androidx.databinding.ObservableList
 import com.john.flickr.data.AppConstant.Companion.getPhotoURL
 import com.john.flickr.data.FlickrResponse
 import com.john.flickr.data.source.Photos
@@ -41,8 +42,8 @@ class RemoteDataLoader {
     fun loadAllPhotos(
         text: String,
         callback: PhotosDataSource.LoadPhotosCallback
-    ): MutableLiveData<MutableList<Photo>> {
-        var photoLiveData = MutableLiveData<MutableList<Photo>>()
+    ): ObservableList<Photo> {
+        var photoLiveData = ObservableArrayList<Photo>()
         service.getPhotoContents(
             METHOD,
             MAX_PER_PAGE,
@@ -68,8 +69,9 @@ class RemoteDataLoader {
                 }
 
                 override fun onNext(photos: MutableList<Photo>) {
-                    photoLiveData.value = photos
-                    callback.onPhotosLoaded(photos)
+                    photoLiveData.clear()
+                    photoLiveData.addAll(photos)
+                    // callback.onPhotosLoaded(photos)
                 }
             })
         return photoLiveData
@@ -78,7 +80,6 @@ class RemoteDataLoader {
     private fun createPhotoUrl(photos: MutableList<Photo>): MutableList<Photo> {
         for (p in photos) {
             p.partialUrl = String.format(CACHEABLE_PHOTO_URL, p.farm, p.server, p.id, p.secret)
-
             p.partialUrl = getPhotoURL(p, 55, 55)
         }
         return photos

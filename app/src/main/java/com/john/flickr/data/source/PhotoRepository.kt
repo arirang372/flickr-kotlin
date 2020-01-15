@@ -1,6 +1,6 @@
 package com.john.flickr.data.source
 
-import androidx.lifecycle.MutableLiveData
+import androidx.databinding.ObservableList
 import com.john.flickr.data.source.remote.RemoteDataLoader
 import com.john.flickr.search.model.Photo
 
@@ -11,12 +11,7 @@ class PhotoRepository {
     fun loadAllPhotos(
         keyword: String,
         callback: PhotosDataSource.LoadPhotosCallback
-    ): MutableLiveData<MutableList<Photo>> {
+    ): ObservableList<Photo> {
         return dataLoader.loadAllPhotos(keyword, callback)
     }
-
-    fun getPhoto(id: String, callback: PhotosDataSource.GetPhotoCallback) {
-
-    }
-
 }

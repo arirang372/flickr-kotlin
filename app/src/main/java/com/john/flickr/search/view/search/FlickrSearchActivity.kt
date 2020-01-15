@@ -42,12 +42,6 @@ class FlickrSearchActivity : AppCompatActivity(), SearchView.OnQueryTextListener
         view_pager.adapter =
             FlickrPagerAdapter(this)
         viewModel.executeSearch(DEFAULT_SEARCH_TEXT)
-
-//        if(savedInstanceState == null)
-//        {
-//            Glide.get(this)
-//                .preFillBitmapPool(PreFillType.Builder())
-//        }
     }
 
     override fun onQueryTextSubmit(query: String?): Boolean {

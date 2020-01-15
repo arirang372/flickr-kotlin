@@ -2,9 +2,17 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-<androidx.recyclerview.widget.RecyclerView
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:id="@+id/flickr_photo_list" />
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.john.flickr.search.viewmodel.FlickrSearchViewModel" />
+    </data>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/flickr_photo_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:listItems="@{viewModel.photos}" />
 </layout>
 

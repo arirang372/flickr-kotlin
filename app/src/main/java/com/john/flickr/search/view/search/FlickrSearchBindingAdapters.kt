@@ -5,6 +5,7 @@ import android.graphics.drawable.ColorDrawable
 import android.widget.ImageView
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.databinding.BindingAdapter
+import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
@@ -38,6 +39,26 @@ object FlickrSearchBindingAdapters {
                     .load(src)
             )
             .into(imageView)
+    }
+
+    @JvmStatic
+    @BindingAdapter("app:gridItems")
+    fun setGridItems(
+        recyclerView: RecyclerView,
+        items: MutableList<com.john.flickr.search.model.Photo>
+    ) {
+        var adapter: PhotoGridAdapter = recyclerView.adapter as PhotoGridAdapter
+        adapter.setPhotos(items)
+    }
+
+    @JvmStatic
+    @BindingAdapter("app:listItems")
+    fun setListItems(
+        listView: RecyclerView,
+        items: MutableList<com.john.flickr.search.model.Photo>
+    ) {
+        var adapter: FlickrPhotoListAdapter = listView.adapter as FlickrPhotoListAdapter
+        adapter.setPhotos(items)
     }
 }
 

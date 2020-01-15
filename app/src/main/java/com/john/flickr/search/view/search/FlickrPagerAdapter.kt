@@ -29,7 +29,7 @@ class FlickrPagerAdapter(activity: FragmentActivity) :
         return titleId?.let { context.getString(it) }
     }
 
-    fun getPageSize(id: Int): Int {
+    private fun getPageSize(id: Int): Int {
         return context.resources.getDimensionPixelSize(id)
     }
 
