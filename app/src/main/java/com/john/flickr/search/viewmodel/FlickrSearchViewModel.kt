@@ -5,6 +5,8 @@ import androidx.databinding.ObservableArrayList
 import androidx.databinding.ObservableBoolean
 import androidx.databinding.ObservableList
 import androidx.lifecycle.AndroidViewModel
+import com.john.flickr.R
+import com.john.flickr.SnackbarMessageEvent
 import com.john.flickr.data.source.PhotoRepository
 import com.john.flickr.data.source.PhotosDataSource
 import com.john.flickr.search.model.Photo
@@ -14,7 +16,7 @@ class FlickrSearchViewModel(application: Application, repository: PhotoRepositor
     private val mRepository: PhotoRepository = repository
     val photos: ObservableList<Photo> = ObservableArrayList<Photo>()
     val dataLoading: ObservableBoolean = ObservableBoolean(false)
-
+    private val mSnackbarText = SnackbarMessageEvent()
     fun executeSearch(input: String) {
         setDataLoading(true)
         mRepository.loadAllPhotos(input, this, photos)
@@ -24,11 +26,16 @@ class FlickrSearchViewModel(application: Application, repository: PhotoRepositor
         dataLoading.set(isLoading)
     }
 
-    override fun onPhotosLoaded(photos: List<Photo>) {
+    override fun onPhotosLoaded() {
         setDataLoading(false)
+        mSnackbarText.setValue(R.string.searching_for)
     }
 
     override fun onPhotoNotAvailable() {
         setDataLoading(false)
+    }
+
+    fun getSnackbarMessage(): SnackbarMessageEvent {
+        return mSnackbarText
     }
 }

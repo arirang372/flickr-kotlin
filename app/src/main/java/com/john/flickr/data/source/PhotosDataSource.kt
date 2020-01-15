@@ -1,18 +1,16 @@
 package com.john.flickr.data.source
 
-import com.john.flickr.search.model.Photo
-
 
 interface PhotosDataSource {
 
     interface LoadPhotosCallback {
-        fun onPhotosLoaded(photos: List<Photo>)
+        fun onPhotosLoaded()
 
         fun onPhotoNotAvailable()
     }
 
     interface GetPhotoCallback {
-        fun onPhotoLoaded(photo: Photo)
+        fun onPhotoLoaded()
 
         fun onPhotoNotAvailable()
     }

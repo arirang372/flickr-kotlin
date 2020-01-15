@@ -1,50 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
+
     <data>
+
         <import type="android.view.View" />
 
         <variable
             name="viewModel"
             type="com.john.flickr.search.viewmodel.FlickrSearchViewModel" />
     </data>
-<merge>
-    <androidx.viewpager.widget.ViewPager
-        android:id="@+id/view_pager"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:visibility="@{viewModel.dataLoading ? View.INVISIBLE : View.VISIBLE}">
 
-        <androidx.viewpager.widget.PagerTabStrip
+    <merge>
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/view_pager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="@{viewModel.dataLoading ? View.INVISIBLE : View.VISIBLE}">
+
+            <androidx.viewpager.widget.PagerTabStrip
                 android:id="@+id/pager_tab_strip"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="top" />
 
-    </androidx.viewpager.widget.ViewPager>
+        </androidx.viewpager.widget.ViewPager>
 
-    <LinearLayout
-        android:id="@+id/searching"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/translucent_black"
-        android:visibility="@{viewModel.dataLoading ? View.VISIBLE : View.INVISIBLE}"
-        android:layout_gravity="center"
-        android:gravity="center"
-        android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/search_term"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        <LinearLayout
+            android:id="@+id/searching"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:background="@color/translucent_black"
             android:gravity="center"
-            android:textSize="16sp"
-            android:layout_marginBottom="10dp"/>
+            android:orientation="vertical"
+            android:visibility="@{viewModel.dataLoading ? View.VISIBLE : View.INVISIBLE}">
 
-        <ProgressBar
-            android:id="@+id/search_loading"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:indeterminate="true"/>
-    </LinearLayout>
-</merge>
+            <TextView
+                android:id="@+id/search_term"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:gravity="center"
+                android:text="Searching ..."
+                android:textSize="16sp"
+                android:visibility="@{viewModel.dataLoading ? View.VISIBLE : View.INVISIBLE}" />
+
+            <ProgressBar
+                android:id="@+id/search_loading"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:indeterminate="true"
+                android:visibility="@{viewModel.dataLoading ? View.VISIBLE : View.INVISIBLE}" />
+        </LinearLayout>
+    </merge>
 </layout>

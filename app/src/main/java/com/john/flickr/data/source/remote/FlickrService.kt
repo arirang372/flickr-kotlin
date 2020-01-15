@@ -7,7 +7,7 @@ import retrofit2.http.Query
 
 /**
  *
- * https://api.flickr.com/services/rest/?method=flickr.photos.getRecent&per_page=300&format=json&api_key=f0e6fbb5fdf1f3842294a1d21f84e8a6&text=kitten
+ * https://api.flickr.com/services/rest/?method=flickr.photos.search&per_page=300&format=json&api_key=f0e6fbb5fdf1f3842294a1d21f84e8a6&text=kitten
  * How to fix the json parse issue below
  * https://stackoverflow.com/questions/27067970/gson-parsing-with-retrofit-parsing-flickr-json-response
  *

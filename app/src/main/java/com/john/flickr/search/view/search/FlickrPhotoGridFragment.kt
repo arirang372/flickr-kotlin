@@ -13,9 +13,11 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.integration.recyclerview.RecyclerViewPreloader
 import com.bumptech.glide.util.FixedPreloadSizeProvider
 import com.john.flickr.R
+import com.john.flickr.SnackbarObserver
 import com.john.flickr.databinding.FlickrPhotoGridBinding
 import com.john.flickr.search.model.Photo
 import com.john.flickr.search.viewmodel.FlickrSearchViewModel
+import com.john.flickr.utils.Utils
 
 class FlickrPhotoGridFragment : Fragment() {
     companion object {
@@ -93,5 +95,15 @@ class FlickrPhotoGridFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         viewModel = activity?.let { FlickrSearchActivity.obtainViewModel(it) }
         binding.viewModel = viewModel
+
+        setupSnackbar()
+    }
+
+    fun setupSnackbar() {
+        viewModel?.getSnackbarMessage()?.observe(this, object : SnackbarObserver {
+            override fun onNewMessage(messageResourceId: Int) {
+                Utils.showSnackBar(view, getString(messageResourceId))
+            }
+        })
     }
 }

@@ -1,7 +1,9 @@
 package com.john.flickr.search.view.search
 
+import android.content.Context
 import android.os.Bundle
 import android.view.Menu
+import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.databinding.DataBindingUtil
@@ -39,15 +41,23 @@ class FlickrSearchActivity : AppCompatActivity(), SearchView.OnQueryTextListener
         searchActivityBinding =
             DataBindingUtil.setContentView(this, R.layout.flickr_search_activity)
         view_pager.pageMargin = resources.getDimensionPixelOffset(R.dimen.page_margin)
-        view_pager.adapter =
-            FlickrPagerAdapter(this)
+        view_pager.adapter = FlickrPagerAdapter(this)
         viewModel.executeSearch(DEFAULT_SEARCH_TEXT)
     }
 
     override fun onQueryTextSubmit(query: String?): Boolean {
         query?.let { viewModel.executeSearch(it) }
         searchView.setQuery("", false)
+        hideKeyboard()
         return true
+    }
+
+    private fun hideKeyboard() {
+        val view = this.currentFocus
+        view?.let { v ->
+            val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
+            imm?.hideSoftInputFromWindow(v.windowToken, 0)
+        }
     }
 
     override fun onQueryTextChange(newText: String?): Boolean {
