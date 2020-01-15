@@ -70,7 +70,7 @@ class RemoteDataLoader {
                 override fun onNext(photos: MutableList<Photo>) {
                     observableList.clear()
                     observableList.addAll(photos)
-                    callback.onPhotosLoaded()
+                    callback.onPhotosLoaded(text)
                 }
             })
     }

@@ -26,9 +26,9 @@ class FlickrSearchViewModel(application: Application, repository: PhotoRepositor
         dataLoading.set(isLoading)
     }
 
-    override fun onPhotosLoaded() {
+    override fun onPhotosLoaded(message : String) {
         setDataLoading(false)
-        mSnackbarText.setValue(R.string.searching_for)
+        mSnackbarText.setValue(message)
     }
 
     override fun onPhotoNotAvailable() {

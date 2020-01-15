@@ -4,7 +4,7 @@ package com.john.flickr.data.source
 interface PhotosDataSource {
 
     interface LoadPhotosCallback {
-        fun onPhotosLoaded()
+        fun onPhotosLoaded(message : String)
 
         fun onPhotoNotAvailable()
     }

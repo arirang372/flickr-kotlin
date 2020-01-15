@@ -101,8 +101,8 @@ class FlickrPhotoGridFragment : Fragment() {
 
     fun setupSnackbar() {
         viewModel?.getSnackbarMessage()?.observe(this, object : SnackbarObserver {
-            override fun onNewMessage(messageResourceId: Int) {
-                Utils.showSnackBar(view, getString(messageResourceId))
+            override fun onNewMessage(message: String) {
+                Utils.showSnackBar(view, getString(R.string.searching_for, message))
             }
         })
     }
