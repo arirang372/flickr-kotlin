@@ -3,19 +3,18 @@ package com.john.flickr.search.view.search
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.core.app.ActivityCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.ListPreloader
 import com.bumptech.glide.RequestBuilder
 import com.john.flickr.databinding.FlickrPhotoGridItemBinding
 import com.john.flickr.search.model.Photo
-import com.john.flickr.search.view.details.FlickrPhotoDetailsActivity
 import com.john.flickr.search.view.search.callbacks.PhotoItemListener
+import com.john.flickr.search.viewmodel.FlickrSearchViewModel
 import java.util.*
 
 
-class FlickrPhotoGridAdapter(photoSize: Int, thumbnail: Boolean) :
+class FlickrPhotoGridAdapter(photoSize: Int, thumbnail: Boolean, viewModel: FlickrSearchViewModel) :
     RecyclerView.Adapter<FlickrPhotoGridAdapter.PhotoViewHolder>(),
     ListPreloader.PreloadModelProvider<Photo> {
     class PhotoViewHolder(binding: FlickrPhotoGridItemBinding) :
@@ -23,8 +22,9 @@ class FlickrPhotoGridAdapter(photoSize: Int, thumbnail: Boolean) :
         val gridItemBinding: FlickrPhotoGridItemBinding = binding
     }
 
-    private var mPhotoSize = photoSize
-    private var mThumbnail = thumbnail
+    private val mPhotoSize = photoSize
+    private val mThumbnail = thumbnail
+    private val mViewModel: FlickrSearchViewModel = viewModel
     private lateinit var mContext: Context
     private var photos: MutableList<Photo> = Collections.emptyList()
 
@@ -58,8 +58,7 @@ class FlickrPhotoGridAdapter(photoSize: Int, thumbnail: Boolean) :
         holder.gridItemBinding.thumbnailValue = mThumbnail
         holder.gridItemBinding.callback = object : PhotoItemListener {
             override fun onItemClicked(photo: Photo) {
-                //go to the next Activity...
-                mContext.startActivity(FlickrPhotoDetailsActivity.getIntent(mContext, photo))
+                mViewModel.setSelectedPhoto(holder.gridItemBinding.imageView, photo)
             }
         }
         holder.gridItemBinding.executePendingBindings()

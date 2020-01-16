@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.ViewCompat
 import androidx.databinding.DataBindingUtil
 import com.john.flickr.R
 import com.john.flickr.databinding.FlickrPhotoDetailsActivityBinding
@@ -30,6 +31,7 @@ class FlickrPhotoDetailsActivity : AppCompatActivity() {
         flickrPhotoDetailsBinding =
             DataBindingUtil.setContentView(this, R.layout.flickr_photo_details_activity)
         var photo = intent?.getParcelableExtra(ARG_PHOTO) as Photo
+        ViewCompat.setTransitionName(flickrPhotoDetailsBinding.fullscreenView, VIEW_NAME_IMAGE)
         flickrPhotoDetailsBinding.model = photo
         flickrPhotoDetailsBinding.executePendingBindings()
     }

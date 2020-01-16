@@ -3,9 +3,11 @@ package com.john.flickr.search.view.search
 import android.content.Context
 import android.os.Bundle
 import android.view.Menu
+import android.view.View
 import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
+import androidx.core.app.ActivityCompat
 import androidx.core.app.ActivityOptionsCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.FragmentActivity
@@ -16,10 +18,10 @@ import com.john.flickr.ViewModelFactory
 import com.john.flickr.data.Page
 import com.john.flickr.data.source.remote.RemoteDataLoader.Companion.DEFAULT_SEARCH_TEXT
 import com.john.flickr.databinding.FlickrSearchActivityBinding
+import com.john.flickr.search.model.Photo
 import com.john.flickr.search.view.details.FlickrPhotoDetailsActivity
 import com.john.flickr.search.viewmodel.FlickrSearchViewModel
 import kotlinx.android.synthetic.main.flickr_search_activity.*
-
 
 class FlickrSearchActivity : AppCompatActivity(), SearchView.OnQueryTextListener {
     private lateinit var searchActivityBinding: FlickrSearchActivityBinding
@@ -51,13 +53,16 @@ class FlickrSearchActivity : AppCompatActivity(), SearchView.OnQueryTextListener
         })
     }
 
-    private fun openDetailPage(pair: Pair<Int, String>) {
-        var activityOption = ActivityOptionsCompat.makeSceneTransitionAnimation(
+    private fun openDetailPage(pair: Pair<View, Photo>) {
+        var activityOptions = ActivityOptionsCompat.makeSceneTransitionAnimation(
             this,
-            searchActivityBinding.root.findViewById(pair.first),
-            pair.second
+            pair.first,
+            FlickrPhotoDetailsActivity.VIEW_NAME_IMAGE
         )
-        startActivity(FlickrPhotoDetailsActivity.getIntent(this, photo))
+        ActivityCompat.startActivity(
+            this, FlickrPhotoDetailsActivity.getIntent(this, pair.second),
+            activityOptions.toBundle()
+        )
     }
 
     override fun onQueryTextSubmit(query: String?): Boolean {

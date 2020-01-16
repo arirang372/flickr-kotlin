@@ -9,11 +9,12 @@ import com.bumptech.glide.RequestBuilder
 import com.bumptech.glide.util.ViewPreloadSizeProvider
 import com.john.flickr.databinding.FlickrPhotoListItemBinding
 import com.john.flickr.search.model.Photo
-import com.john.flickr.search.view.details.FlickrPhotoDetailsActivity
 import com.john.flickr.search.view.search.callbacks.PhotoItemListener
+import com.john.flickr.search.viewmodel.FlickrSearchViewModel
 import java.util.*
 
-class FlickrPhotoListAdapter : RecyclerView.Adapter<FlickrPhotoListAdapter.PhotoTileViewHolder>(),
+class FlickrPhotoListAdapter(viewModel: FlickrSearchViewModel) :
+    RecyclerView.Adapter<FlickrPhotoListAdapter.PhotoTileViewHolder>(),
     ListPreloader.PreloadModelProvider<Photo> {
     class PhotoTileViewHolder(binding: FlickrPhotoListItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
@@ -22,7 +23,7 @@ class FlickrPhotoListAdapter : RecyclerView.Adapter<FlickrPhotoListAdapter.Photo
 
     private lateinit var mContext: Context
     private var photos: MutableList<Photo>? = Collections.emptyList()
-
+    private val mViewModel: FlickrSearchViewModel = viewModel
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PhotoTileViewHolder {
         mContext = parent.context
         var binding =
@@ -44,7 +45,7 @@ class FlickrPhotoListAdapter : RecyclerView.Adapter<FlickrPhotoListAdapter.Photo
         holder.listItemBinding.callback = object : PhotoItemListener {
             override fun onItemClicked(photo: Photo) {
                 //go to the next Activity...
-                mContext.startActivity(FlickrPhotoDetailsActivity.getIntent(mContext, photo))
+                mViewModel.setSelectedPhoto(holder.listItemBinding.photoView, photo)
             }
         }
         holder.listItemBinding.executePendingBindings()

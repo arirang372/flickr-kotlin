@@ -1,11 +1,13 @@
 package com.john.flickr.search.viewmodel
 
 import android.app.Application
+import android.view.View
 import androidx.databinding.ObservableArrayList
 import androidx.databinding.ObservableBoolean
 import androidx.databinding.ObservableList
 import androidx.lifecycle.AndroidViewModel
-import com.john.flickr.SingleLiveEvent
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.john.flickr.SnackbarMessageEvent
 import com.john.flickr.data.source.PhotoRepository
 import com.john.flickr.data.source.PhotosDataSource
@@ -17,7 +19,7 @@ class FlickrSearchViewModel(application: Application, repository: PhotoRepositor
     val photos: ObservableList<Photo> = ObservableArrayList<Photo>()
     val dataLoading: ObservableBoolean = ObservableBoolean(false)
     private val mSnackbarText = SnackbarMessageEvent()
-    val mOpenTaskEvent: SingleLiveEvent<Pair<Int, String>> = SingleLiveEvent()
+    private val mOpenTaskEvent: MutableLiveData<Pair<View, Photo>> = MutableLiveData()
 
     fun executeSearch(input: String) {
         setDataLoading(true)
@@ -41,7 +43,11 @@ class FlickrSearchViewModel(application: Application, repository: PhotoRepositor
         return mSnackbarText
     }
 
-    fun getOpenTaskEvent(): SingleLiveEvent<Pair<Int, String>> {
+    fun getOpenTaskEvent(): LiveData<Pair<View, Photo>> {
         return mOpenTaskEvent
+    }
+
+    fun setSelectedPhoto(view: View, photo: Photo) {
+        mOpenTaskEvent.value = Pair(view, photo)
     }
 }

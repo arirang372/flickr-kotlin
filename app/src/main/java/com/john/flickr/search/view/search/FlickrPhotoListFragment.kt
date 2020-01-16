@@ -35,10 +35,10 @@ class FlickrPhotoListFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FlickrPhotoListBinding.inflate(inflater, container, false)
+        viewModel = activity?.let { FlickrSearchActivity.obtainViewModel(it) }
         var flickrPhotoList: RecyclerView = binding.root.findViewById(R.id.flickr_photo_list)
         flickrPhotoList.layoutManager = LinearLayoutManager(context)
-        flickrPhotoList.adapter =
-            FlickrPhotoListAdapter()
+        flickrPhotoList.adapter = FlickrPhotoListAdapter(viewModel!!)
         var preloader = RecyclerViewPreloader<Photo>(
             Glide.with(this), flickrPhotoList.adapter as FlickrPhotoListAdapter,
             ViewPreloadSizeProvider<Photo>(),
@@ -71,7 +71,6 @@ class FlickrPhotoListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel = activity?.let { FlickrSearchActivity.obtainViewModel(it) }
         binding.viewModel = viewModel
     }
 }

@@ -51,6 +51,7 @@ class FlickrPhotoGridFragment : Fragment() {
         var preloadKey = args.getInt(PRELOAD_KEY)
 
         binding = FlickrPhotoGridBinding.inflate(inflater, container, false)
+        viewModel = activity?.let { FlickrSearchActivity.obtainViewModel(it) }
 
         var gridMargin: Int = resources.getDimensionPixelOffset(R.dimen.grid_margin)
         var spanCount: Int = resources.displayMetrics.widthPixels / (photoSize + (2 * gridMargin))
@@ -76,7 +77,7 @@ class FlickrPhotoGridFragment : Fragment() {
         var heightCount = resources.displayMetrics.heightPixels / photoSize
         flickrPhotoGrid.recycledViewPool.setMaxRecycledViews(0, spanCount * heightCount * 2)
         flickrPhotoGrid.setItemViewCacheSize(0)
-        flickrPhotoGrid.adapter = FlickrPhotoGridAdapter(photoSize, thumbnail)
+        flickrPhotoGrid.adapter = FlickrPhotoGridAdapter(photoSize, thumbnail, viewModel!!)
 
         var preloadSizeProvider: FixedPreloadSizeProvider<Photo> =
             FixedPreloadSizeProvider(photoSize, photoSize)
@@ -93,7 +94,6 @@ class FlickrPhotoGridFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel = activity?.let { FlickrSearchActivity.obtainViewModel(it) }
         binding.viewModel = viewModel
 
         setupSnackbar()
