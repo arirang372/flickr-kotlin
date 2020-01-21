@@ -2,6 +2,7 @@ package com.john.flickr.search.view.search
 
 import android.graphics.Rect
 import android.os.Bundle
+import android.transition.TransitionInflater
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,6 +17,7 @@ import com.john.flickr.R
 import com.john.flickr.SnackbarObserver
 import com.john.flickr.databinding.FlickrPhotoGridBinding
 import com.john.flickr.search.model.Photo
+import com.john.flickr.search.view.search.callbacks.ElementCallback
 import com.john.flickr.search.viewmodel.FlickrSearchViewModel
 import com.john.flickr.utils.Utils
 
@@ -40,6 +42,7 @@ class FlickrPhotoGridFragment : Fragment() {
 
     private var viewModel: FlickrSearchViewModel? = null
     lateinit var binding: FlickrPhotoGridBinding
+    private lateinit var flickrPhotoGrid: RecyclerView
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -55,7 +58,7 @@ class FlickrPhotoGridFragment : Fragment() {
 
         var gridMargin: Int = resources.getDimensionPixelOffset(R.dimen.grid_margin)
         var spanCount: Int = resources.displayMetrics.widthPixels / (photoSize + (2 * gridMargin))
-        var flickrPhotoGrid: RecyclerView = binding.root.findViewById(R.id.flickr_photo_grid)
+        flickrPhotoGrid = binding.root.findViewById(R.id.flickr_photo_grid)
         flickrPhotoGrid.layoutManager = GridLayoutManager(activity, spanCount)
         flickrPhotoGrid.addItemDecoration(object : RecyclerView.ItemDecoration() {
             override fun getItemOffsets(
@@ -88,8 +91,50 @@ class FlickrPhotoGridFragment : Fragment() {
             preloadKey
         )
         flickrPhotoGrid.addOnScrollListener(preloader)
-        flickrPhotoGrid.scrollToPosition(savedInstanceState?.getInt(STATE_POSITION_INDEX) ?: 0)
+        //flickrPhotoGrid.scrollToPosition(savedInstanceState?.getInt(STATE_POSITION_INDEX) ?: 0)
+        scrollToPosition()
+        prepareTransition()
         return binding.root
+    }
+
+    /**
+     * Scrolls the recycler view to show the last viewed item in the grid. This is important when
+     * navigating back from the grid.
+     */
+    fun scrollToPosition() {
+        flickrPhotoGrid.addOnLayoutChangeListener(object : View.OnLayoutChangeListener {
+            override fun onLayoutChange(
+                v: View?,
+                left: Int,
+                top: Int,
+                right: Int,
+                bottom: Int,
+                oldLeft: Int,
+                oldTop: Int,
+                oldRight: Int,
+                oldBottom: Int
+            ) {
+                flickrPhotoGrid.removeOnLayoutChangeListener(this)
+                var layoutManager: RecyclerView.LayoutManager =
+                    flickrPhotoGrid.layoutManager as GridLayoutManager
+                viewModel?.let { layoutManager.findViewByPosition(it.currentImageItemPosition) }
+                var viewAtPosition =
+                    layoutManager.findViewByPosition(viewModel?.currentImageItemPosition!!)
+                viewAtPosition?.let {
+                    if (layoutManager.isViewPartiallyVisible(it, false, true)) {
+                        flickrPhotoGrid.post {
+                            viewModel?.let { it -> layoutManager.scrollToPosition(it.currentImageItemPosition) }
+                        }
+                    }
+                }
+
+            }
+        })
+    }
+
+    private fun prepareTransition() {
+        exitTransition = TransitionInflater.from(context).inflateTransition(R.transition.grid_exit_transition)
+        setExitSharedElementCallback(ElementCallback(viewModel!!, flickrPhotoGrid))
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

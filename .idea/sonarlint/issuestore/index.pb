@@ -35,12 +35,6 @@ p
 @app/src/main/java/com/john/flickr/data/source/PhotoRepository.kt,0\0\003352ab571769deda5dfdc6461ad1ea2edca8ab
 {
 Kapp/src/main/java/com/john/flickr/search/viewmodel/FlickrSearchViewModel.kt,0\4\046dd3109745fa1246adbccd124e553823126e67
-d
-4app/src/main/java/com/john/flickr/CustomImageView.kt,7\4\74299c464c98eb21bac205da53201e7855307d43
-‡
-Wapp/src/main/java/com/john/flickr/search/view/search/callbacks/PhotoGridItemListener.kt,f\4\f43b1322733b6a0f1207d44444df1e7062738b40
-}
-Mapp/src/main/java/com/john/flickr/search/view/search/callbacks/PhotoViewer.kt,f\c\fc8b134200d29150b19cfcf657f108078366db9a
 z
 Japp/src/main/java/com/john/flickr/search/view/search/FlickrPagerAdapter.kt,d\9\d91806eec8b422f8395c07cb43d0f5d25906e1cd
 ~
@@ -51,8 +45,6 @@ e
 Oapp/src/main/java/com/john/flickr/search/view/search/FlickrPhotoListFragment.kt,1\7\170ef0dff3c1cf94ea028bb0ba7c002448db5dd1
 ƒ
 Sapp/src/main/java/com/john/flickr/search/view/details/FlickrPhotoDetailsActivity.kt,c\e\ce8b0b46e7673c35af6e412d44534ed6402e9b4d
-x
-Happ/src/main/java/com/john/flickr/search/view/search/PhotoGridAdapter.kt,b\f\bf4a17b1437b7cbd824e1eb23593cdee149dbbf9
 |
 Lapp/src/main/java/com/john/flickr/search/view/search/FlickrSearchActivity.kt,2\0\20b6e5297477d8d200a7d4d27717d469d92c705e
 ƒ
@@ -61,3 +53,15 @@ Sapp/src/main/java/com/john/flickr/search/view/search/FlickrSearchBindingAdapter
 Tapp/src/main/java/com/john/flickr/search/view/details/FlickrDetailsBindingAdapter.kt,7\3\73e0c51f6918f32b9cb9b9a5bfc2e99ae359e6bd
 
 Oapp/src/main/java/com/john/flickr/search/view/search/FlickrPhotoGridFragment.kt,e\5\e5708f168ea2c7ce4bc2b567e8cdbbe3eea04817
+`
+0app/src/main/java/com/john/flickr/utils/Utils.kt,8\8\88387afcf5e4c7c49c9fff738b3ad93f33be59f1
+ƒ
+Sapp/src/main/java/com/john/flickr/search/view/search/callbacks/PhotoItemListener.kt,4\0\4065ead7ca5d9d1b9bd3fc6dc37d0212c7e185c3
+d
+4app/src/main/java/com/john/flickr/SingleLiveEvent.kt,7\7\77345ce1804432e5ab497bf861cd0838bc2860b3
+i
+9app/src/main/java/com/john/flickr/SnackbarMessageEvent.kt,c\c\cc6d14e2bb8169f305cf042b2623d98fc898051f
+e
+5app/src/main/java/com/john/flickr/SnackbarObserver.kt,d\3\d34122ebbae77d6a360a1677392660d6734090ca
+~
+Napp/src/main/java/com/john/flickr/search/view/search/FlickrPhotoGridAdapter.kt,8\9\892732ca46373e452453d04f79b99be0336f8ce5

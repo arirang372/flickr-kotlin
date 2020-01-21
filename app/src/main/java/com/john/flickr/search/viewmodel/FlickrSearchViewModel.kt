@@ -20,7 +20,7 @@ class FlickrSearchViewModel(application: Application, repository: PhotoRepositor
     val dataLoading: ObservableBoolean = ObservableBoolean(false)
     private val mSnackbarText = SnackbarMessageEvent()
     private val mOpenTaskEvent: MutableLiveData<Pair<View, Photo>> = MutableLiveData()
-
+    val currentImageItemPosition : Int = 0
     fun executeSearch(input: String) {
         setDataLoading(true)
         mRepository.loadAllPhotos(input, this, photos)
