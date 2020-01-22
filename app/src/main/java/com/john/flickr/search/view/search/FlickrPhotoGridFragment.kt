@@ -2,7 +2,6 @@ package com.john.flickr.search.view.search
 
 import android.graphics.Rect
 import android.os.Bundle
-import android.transition.TransitionInflater
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,7 +16,6 @@ import com.john.flickr.R
 import com.john.flickr.SnackbarObserver
 import com.john.flickr.databinding.FlickrPhotoGridBinding
 import com.john.flickr.search.model.Photo
-import com.john.flickr.search.view.search.callbacks.ElementCallback
 import com.john.flickr.search.viewmodel.FlickrSearchViewModel
 import com.john.flickr.utils.Utils
 
@@ -91,9 +89,9 @@ class FlickrPhotoGridFragment : Fragment() {
             preloadKey
         )
         flickrPhotoGrid.addOnScrollListener(preloader)
-        //flickrPhotoGrid.scrollToPosition(savedInstanceState?.getInt(STATE_POSITION_INDEX) ?: 0)
-        scrollToPosition()
-        prepareTransition()
+        flickrPhotoGrid.scrollToPosition(savedInstanceState?.getInt(STATE_POSITION_INDEX) ?: 0)
+//        scrollToPosition()
+//        prepareTransition()
         return binding.root
     }
 
@@ -132,10 +130,10 @@ class FlickrPhotoGridFragment : Fragment() {
         })
     }
 
-    private fun prepareTransition() {
-        exitTransition = TransitionInflater.from(context).inflateTransition(R.transition.grid_exit_transition)
-        setExitSharedElementCallback(ElementCallback(viewModel!!, flickrPhotoGrid))
-    }
+//    private fun prepareTransition() {
+//        exitTransition = TransitionInflater.from(context).inflateTransition(R.transition.grid_exit_transition)
+//        setExitSharedElementCallback(ElementCallback(viewModel!!, flickrPhotoGrid))
+//    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
