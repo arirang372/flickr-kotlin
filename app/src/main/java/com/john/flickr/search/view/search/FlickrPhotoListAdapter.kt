@@ -40,12 +40,12 @@ class FlickrPhotoListAdapter(viewModel: FlickrSearchViewModel) :
     }
 
     override fun onBindViewHolder(holder: PhotoTileViewHolder, position: Int) {
-        var photo = this!!.photos!![position]
+        var photo = photos!![position]
         holder.listItemBinding.model = photo
         holder.listItemBinding.callback = object : PhotoItemListener {
             override fun onItemClicked(photo: Photo) {
                 //go to the next Activity...
-                mViewModel.setSelectedPhoto(holder.listItemBinding.photoView, photo)
+                mViewModel.setSelectedPhoto(holder.listItemBinding.photoView, photo, position)
             }
         }
         holder.listItemBinding.executePendingBindings()

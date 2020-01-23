@@ -54,11 +54,11 @@ class FlickrPhotoGridAdapter(photoSize: Int, thumbnail: Boolean, viewModel: Flic
     }
 
     override fun onBindViewHolder(holder: PhotoViewHolder, position: Int) {
-        holder.gridItemBinding.model = this!!.photos[position]
+        holder.gridItemBinding.model = photos[position]
         holder.gridItemBinding.thumbnailValue = mThumbnail
         holder.gridItemBinding.callback = object : PhotoItemListener {
             override fun onItemClicked(photo: Photo) {
-                mViewModel.setSelectedPhoto(holder.gridItemBinding.imageView, photo)
+                mViewModel.setSelectedPhoto(holder.gridItemBinding.imageView, photo, position)
             }
         }
         holder.gridItemBinding.executePendingBindings()

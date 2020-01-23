@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
         <variable
-            name="model"
-            type="com.john.flickr.search.model.Photo" />
+            name="viewModel"
+            type="com.john.flickr.search.viewmodel.FlickrDetailsViewModel" />
     </data>
 
-    <ImageView
-        android:id="@+id/fullscreen_view"
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/flickrViewPager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:contentDescription="@string/fullscreen_description"
-        android:src="@{model.partialUrl}" />
+        app:viewPagerItems="@{viewModel.photos}" />
 </layout>

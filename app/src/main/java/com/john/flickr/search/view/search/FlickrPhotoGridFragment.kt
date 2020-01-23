@@ -41,6 +41,7 @@ class FlickrPhotoGridFragment : Fragment() {
     private var viewModel: FlickrSearchViewModel? = null
     lateinit var binding: FlickrPhotoGridBinding
     private lateinit var flickrPhotoGrid: RecyclerView
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -99,36 +100,36 @@ class FlickrPhotoGridFragment : Fragment() {
      * Scrolls the recycler view to show the last viewed item in the grid. This is important when
      * navigating back from the grid.
      */
-    fun scrollToPosition() {
-        flickrPhotoGrid.addOnLayoutChangeListener(object : View.OnLayoutChangeListener {
-            override fun onLayoutChange(
-                v: View?,
-                left: Int,
-                top: Int,
-                right: Int,
-                bottom: Int,
-                oldLeft: Int,
-                oldTop: Int,
-                oldRight: Int,
-                oldBottom: Int
-            ) {
-                flickrPhotoGrid.removeOnLayoutChangeListener(this)
-                var layoutManager: RecyclerView.LayoutManager =
-                    flickrPhotoGrid.layoutManager as GridLayoutManager
-                viewModel?.let { layoutManager.findViewByPosition(it.currentImageItemPosition) }
-                var viewAtPosition =
-                    layoutManager.findViewByPosition(viewModel?.currentImageItemPosition!!)
-                viewAtPosition?.let {
-                    if (layoutManager.isViewPartiallyVisible(it, false, true)) {
-                        flickrPhotoGrid.post {
-                            viewModel?.let { it -> layoutManager.scrollToPosition(it.currentImageItemPosition) }
-                        }
-                    }
-                }
-
-            }
-        })
-    }
+//    fun scrollToPosition() {
+//        flickrPhotoGrid.addOnLayoutChangeListener(object : View.OnLayoutChangeListener {
+//            override fun onLayoutChange(
+//                v: View?,
+//                left: Int,
+//                top: Int,
+//                right: Int,
+//                bottom: Int,
+//                oldLeft: Int,
+//                oldTop: Int,
+//                oldRight: Int,
+//                oldBottom: Int
+//            ) {
+//                flickrPhotoGrid.removeOnLayoutChangeListener(this)
+//                var layoutManager: RecyclerView.LayoutManager =
+//                    flickrPhotoGrid.layoutManager as GridLayoutManager
+//                viewModel?.let { layoutManager.findViewByPosition(it.currentImageItemPosition) }
+//                var viewAtPosition =
+//                    layoutManager.findViewByPosition(viewModel?.currentImageItemPosition!!)
+//                viewAtPosition?.let {
+//                    if (layoutManager.isViewPartiallyVisible(it, false, true)) {
+//                        flickrPhotoGrid.post {
+//                            viewModel?.let { it -> layoutManager.scrollToPosition(it.currentImageItemPosition) }
+//                        }
+//                    }
+//                }
+//
+//            }
+//        })
+//    }
 
 //    private fun prepareTransition() {
 //        exitTransition = TransitionInflater.from(context).inflateTransition(R.transition.grid_exit_transition)

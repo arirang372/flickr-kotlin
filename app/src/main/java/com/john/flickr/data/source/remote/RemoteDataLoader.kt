@@ -42,7 +42,7 @@ class RemoteDataLoader {
         text: String,
         callback: PhotosDataSource.LoadPhotosCallback,
         observableList: ObservableList<Photo>
-    ) {
+    ) : ObservableList<Photo> {
         service.getPhotoContents(
             METHOD,
             MAX_PER_PAGE,
@@ -73,6 +73,7 @@ class RemoteDataLoader {
                     callback.onPhotosLoaded(text)
                 }
             })
+        return observableList
     }
 
     private fun createPhotoUrl(photos: MutableList<Photo>): MutableList<Photo> {

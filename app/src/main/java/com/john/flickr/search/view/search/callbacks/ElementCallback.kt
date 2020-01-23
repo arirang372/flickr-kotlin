@@ -16,7 +16,7 @@ class ElementCallback(viewModel: FlickrSearchViewModel, recyclerView: RecyclerVi
     ) {
         mViewModel?.let {
             var selectedViewHolder =
-                mRecyclerView.findViewHolderForAdapterPosition(it.currentImageItemPosition)
+                mRecyclerView.findViewHolderForAdapterPosition(it.currentImageItemPosition!!)
             selectedViewHolder?.let {
                 sharedElements?.let { it ->
                     it.put(

@@ -6,6 +6,7 @@ import android.widget.ImageView
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
+import androidx.viewpager.widget.ViewPager
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
@@ -58,6 +59,16 @@ object FlickrSearchBindingAdapters {
         items: MutableList<com.john.flickr.search.model.Photo>
     ) {
         var adapter: FlickrPhotoListAdapter = listView.adapter as FlickrPhotoListAdapter
+        adapter.setPhotos(items)
+    }
+
+    @JvmStatic
+    @BindingAdapter("app:viewPagerItems")
+    fun setViewPagerItems(
+        viewPager: ViewPager,
+        items: MutableList<com.john.flickr.search.model.Photo>
+    ) {
+        var adapter: FlickrPhotoViewPagerAdapter = viewPager.adapter as FlickrPhotoViewPagerAdapter
         adapter.setPhotos(items)
     }
 }
