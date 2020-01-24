@@ -63,13 +63,14 @@ object FlickrSearchBindingAdapters {
     }
 
     @JvmStatic
-    @BindingAdapter("app:viewPagerItems")
+    @BindingAdapter(value = ["app:viewPagerItems", "app:currentPosition"], requireAll = true)
     fun setViewPagerItems(
-        viewPager: ViewPager,
-        items: MutableList<com.john.flickr.search.model.Photo>
+        viewPager: ViewPager, items: MutableList<com.john.flickr.search.model.Photo>,
+        currentPosition: Int
     ) {
         var adapter: FlickrPhotoViewPagerAdapter = viewPager.adapter as FlickrPhotoViewPagerAdapter
         adapter.setPhotos(items)
+        viewPager.currentItem = currentPosition
     }
 }
 

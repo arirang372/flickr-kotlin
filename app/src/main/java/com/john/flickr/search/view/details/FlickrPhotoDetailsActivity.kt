@@ -44,11 +44,8 @@ class FlickrPhotoDetailsActivity : AppCompatActivity() {
         flickrPhotoDetailsActivityBinding =
             DataBindingUtil.setContentView(this, R.layout.flickr_photo_details_activity)
         flickrPhotoDetailsActivityBinding.viewModel = viewModel
-
-        //var photo = intent?.getParcelableExtra(ARG_PHOTO) as Photo
         var flickrViewPager: ViewPager = flickrPhotoDetailsActivityBinding.flickrViewPager
         flickrViewPager.adapter = FlickrPhotoViewPagerAdapter(supportFragmentManager)
-        flickrViewPager.currentItem = viewModel.currentImageItemPosition
         flickrViewPager.addOnPageChangeListener(object : ViewPager.SimpleOnPageChangeListener() {
             override fun onPageSelected(position: Int) {
                 viewModel.setCurrentImageItemPosition(position)
@@ -58,7 +55,6 @@ class FlickrPhotoDetailsActivity : AppCompatActivity() {
             flickrPhotoDetailsActivityBinding.flickrViewPager,
             VIEW_NAME_IMAGE
         )
-
         flickrPhotoDetailsActivityBinding.executePendingBindings()
     }
 }
