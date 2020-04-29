@@ -6,7 +6,6 @@ apply plugin: 'kotlin-android-extensions'
 
 android {
     compileSdkVersion 29
-    buildToolsVersion "29.0.2"
     defaultConfig {
         applicationId "com.john.flickr"
         minSdkVersion 21
@@ -34,8 +33,8 @@ android {
 }
 
 ext {
-    okHttpVersion = '4.2.2'
-    retrofit2Version = '2.7.0'
+    okHttpVersion = '4.3.1'
+    retrofit2Version = '2.7.1'
     glideVersion = '4.10.0'
 }
 
